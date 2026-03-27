@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrito de compras - Malten 3D Lab</title>
+<style>
+body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; }
+header { background-color: #333; color: #fff; padding: 1rem; text-align: center; }
+main { padding: 1rem; max-width: 800px; margin: auto; }
+h1 { margin: 0; }
+h2 { margin-top: 1.5rem; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
+tbody tr:nth-child(odd) { background-color: #fafafa; }
+button { padding: 0.3rem 0.6rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
+.add-btn { background-color: #007bff; color: #fff; }
+.remove-btn { background-color: #dc3545; color: #fff; }
+.quantity-btn { background-color: #17a2b8; color: #fff; }
+.checkout-btn { background-color: #28a745; color: #fff; padding: 0.5rem 1rem; margin-top: 1rem; font-size: 1rem; }
+.checkout-btn:disabled { background-color: #6c757d; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Carrito de compras</h1>
+</header>
+<main>
+  <div id="addItemSection">
+    <h2>Agregar ítem</h2>
+    <input type="text" id="itemName" placeholder="Nombre del producto" />
+    <input type="number" id="itemPrice" placeholder="Precio (UYU)" min="0" step="0.01" />
+    <input type="number" id="itemQuantity" value="1" min="1" />
+    <button class="add-btn" id="addItem">Agregar</button>
+  </div>
+  <div id="cartSection">
+    <h2>Tu carrito</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="cartBody"></tbody>
+    </table>
+    <p><strong>Total:</strong> <span id="cartTotal">0 UYU</span></p>
+    <button class="checkout-btn" id="checkoutBtn" disabled>Finalizar compra</button>
+  </div>
+</main>
+<script>
+let cart = [];
+function renderCart() {
+  const tbody = document.getElementById('cartBody');
+  tbody.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    const subtotal = item.price * item.quantity;
+    total += subtotal;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${item.name}</td>
+      <td>${item.price.toFixed(2)} UYU</td>
+      <td>
+        <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+        ${item.quantity}
+        <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+      </td>
+      <td>${subtotal.toFixed(2)} UYU</td>
+      <td><button class="remove-btn" onclick="removeItem(${index})">Eliminar</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('cartTotal').textContent = total.toFixed(2) + ' UYU';
+  document.getElementById('checkoutBtn').disabled = cart.length === 0;
+}
+function addItem() {
+  const name = document.getElementById('itemName').value.trim();
+  const price = parseFloat(document.getElementById('itemPrice').value);
+  const quantity = parseInt(document.getElementById('itemQuantity').value);
+  if (!name || isNaN(price) || price <= 0 || isNaN(quantity) || quantity <= 0) {
+    alert('Por favor ingresá nombre, precio válido y cantidad.');
+    return;
+  }
+  cart.push({ name, price, quantity });
+  document.getElementById('itemName').value = '';
+  document.getElementById('itemPrice').value = '';
+  document.getElementById('itemQuantity').value = 1;
+  renderCart();
+}
+function updateQuantity(index, delta) {
+  cart[index].quantity += delta;
+  if (cart[index].quantity <= 0) {
+    cart.splice(index, 1);
+  }
+  renderCart();
+}
+function removeItem(index) {
+  cart.splice(index, 1);
+  renderCart();
+}
+document.getElementById('addItem').addEventListener('click', addItem);
+document.getElementById('checkoutBtn').addEventListener('click', () => {
+  alert('Resumen de tu pedido:
+' + cart.map(item => `${item.quantity} x ${item.name} = ${ (item.price * item.quantity).toFixed(2)} UYU`).join('
+') + '
+
+Total: ' + document.getElementById('cartTotal').textContent);
+});
+</script>
+</body>
+</html>

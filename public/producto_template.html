@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Producto - Malten 3D Lab</title>
+<style>
+body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; }
+header { background-color: #333; color: #fff; padding: 1rem; text-align: center; }
+main { padding: 1rem; max-width: 800px; margin: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.product-image { max-width: 100%; border-radius: 4px; }
+h1 { margin-top: 0; font-size: 1.6rem; }
+p.description { font-size: 1rem; color: #555; }
+.price { font-size: 1.2rem; font-weight: bold; margin: 0.5rem 0; }
+.button { display: inline-block; padding: 0.5rem 1rem; background-color: #007bff; color: #fff; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; text-decoration: none; }
+.edit-btn { background-color: #6c757d; margin-left: 0.5rem; }
+#editForm { display: none; margin-top: 1rem; }
+#editForm input, #editForm textarea, #editForm button { width: 100%; margin-bottom: 0.5rem; padding: 0.5rem; font-size: 0.9rem; }
+.related { margin-top: 2rem; }
+.related h2 { margin-bottom: 1rem; font-size: 1.2rem; }
+.related-items { display: flex; flex-wrap: wrap; gap: 1rem; }
+.related-item { flex: 1 1 45%; background-color: #f7f7f7; padding: 0.5rem; border-radius: 4px; text-align: center; }
+.related-item img { max-width: 100%; border-radius: 4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="productName">Nombre del Producto</h1>
+</header>
+<main>
+  <img id="productImage" class="product-image" src="https://via.placeholder.com/600x400?text=Imagen+Producto" alt="Imagen del producto">
+  <p id="productDescription" class="description">Descripción del producto. Aquí podés detallar las características, beneficios y usos principales de tu creación en 3D.</p>
+  <p id="productPrice" class="price">Precio: $0 UYU</p>
+  <button class="button">Agregar al carrito</button>
+  <button class="button edit-btn" id="editProduct">Editar</button>
+
+  <div id="editForm">
+    <h2>Editar producto</h2>
+    <input type="text" id="editName" placeholder="Nombre">
+    <textarea id="editDescription" placeholder="Descripción"></textarea>
+    <input type="text" id="editPrice" placeholder="Precio (ej. 350 UYU)">
+    <label for="editImage">Seleccionar nueva imagen:</label>
+    <input type="file" id="editImage" accept="image/*" />
+    <button class="button" id="saveEdit">Guardar</button>
+    <button class="button edit-btn" id="cancelEdit">Cancelar</button>
+  </div>
+
+  <div class="related">
+    <h2>Productos relacionados</h2>
+    <div class="related-items">
+      <div class="related-item">
+        <img src="https://via.placeholder.com/200x150?text=Rel1" alt="Relacionado 1">
+        <p>Producto 1</p>
+      </div>
+      <div class="related-item">
+        <img src="https://via.placeholder.com/200x150?text=Rel2" alt="Relacionado 2">
+        <p>Producto 2</p>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+// Populate edit form with current product details
+function populateEditForm() {
+  document.getElementById('editName').value = document.getElementById('productName').textContent;
+  document.getElementById('editDescription').value = document.getElementById('productDescription').textContent;
+  document.getElementById('editPrice').value = document.getElementById('productPrice').textContent.replace('Precio: ', '');
+}
+// Show edit form
+document.getElementById('editProduct').addEventListener('click', () => {
+  populateEditForm();
+  document.getElementById('editForm').style.display = 'block';
+});
+// Cancel edit
+document.getElementById('cancelEdit').addEventListener('click', () => {
+  document.getElementById('editForm').style.display = 'none';
+});
+// Save edit
+document.getElementById('saveEdit').addEventListener('click', () => {
+  const newName = document.getElementById('editName').value.trim();
+  const newDescription = document.getElementById('editDescription').value.trim();
+  const newPrice = document.getElementById('editPrice').value.trim();
+  const imageFile = document.getElementById('editImage').files[0];
+  if (!newName || !newDescription || !newPrice) {
+    alert('Completá todos los campos.');
+    return;
+  }
+  // Update product details
+  document.getElementById('productName').textContent = newName;
+  document.getElementById('productDescription').textContent = newDescription;
+  document.getElementById('productPrice').textContent = 'Precio: ' + newPrice;
+  // Update image if a new one is selected
+  if (imageFile) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('productImage').src = e.target.result;
+    };
+    reader.readAsDataURL(imageFile);
+  }
+  document.getElementById('editForm').style.display = 'none';
+});
+</script>
+</body>
+</html>
