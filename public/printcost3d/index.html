@@ -84,7 +84,7 @@ button{border:0;border-radius:12px;padding:11px 15px;font-weight:750}button:disa
     <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><div class="brand"><span class="mark">P3</span><div>PrintCost 3D<small>Costos claros. Precios rentables.</small></div></div><button id="backLandingBtn" class="ghost mini" type="button">Volver</button></div>
     <div><div class="eyebrow">TU TALLER EN LA NUBE</div><h1 id="authTitle">Entrá a tu cuenta</h1><p id="authText">Guardá cotizaciones y configuraciones sincronizadas.</p></div>
     <div id="authTabs" class="tabs"><button id="tabLogin" class="active" type="button">Entrar</button><button id="tabSignup" type="button">Crear cuenta</button></div>
-    <div id="authMessage" class="hidden"></div>
+    <div id="authMessage" class="hidden" role="status" aria-live="polite"></div>
     <form id="authForm" class="stack">
       <label id="emailLabel">Email<input id="authEmail" type="email" required autocomplete="email" placeholder="tu@email.com"></label>
       <label>Contraseña<input id="authPassword" type="password" required minlength="8" autocomplete="current-password" placeholder="Mínimo 8 caracteres"></label>
@@ -192,7 +192,7 @@ button{border:0;border-radius:12px;padding:11px 15px;font-weight:750}button:disa
     <div class="clientQuoteActions"><button id="shareClientDialog" class="primary full">Compartir presupuesto</button><button id="copyClientDialog" class="ghost full">Copiar texto</button></div>
   </div>
 </dialog>
-<div id="toast" class="toast"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script type="module">
 let createClient;
@@ -355,8 +355,10 @@ $('authForm').onsubmit=async e=>{
 };
 $('forgotBtn').onclick=async()=>{
  const email=$('authEmail').value.trim();if(!email){authMessage('Escribí tu email primero.','error');return}
- const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+'/printcost3d/'});
- authMessage(error?error.message:'Te enviamos un enlace de recuperación. Si el enlace confirma correctamente, volvé a esta página para iniciar sesión.',error?'error':'ok');
+ const btn=$('forgotBtn');btn.disabled=true;const old=btn.textContent;btn.textContent='Enviando…';
+ try{const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+'/printcost3d/'});
+ authMessage(error?error.message:'Te enviamos un enlace. Abrilo desde tu email para elegir una contraseña nueva.',error?'error':'ok');}
+ finally{btn.disabled=false;btn.textContent=old}
 };
 $('logoutBtn').onclick=async()=>{await sb.auth.signOut();location.reload()};
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
@@ -364,8 +366,8 @@ $('dismissOnboarding').onclick=()=>{localStorage.setItem('pc3d_onboarding_done',
 $('historySearch').addEventListener('input',renderHistory);$('historyPeriod').addEventListener('change',renderHistory);
 $('quotePrinter').addEventListener('change',e=>selectPrinter(e.target.value));$('printerEditor').addEventListener('change',e=>selectPrinter(e.target.value));
 $('quoteMaterial').addEventListener('change',e=>selectMaterial(e.target.value));$('materialEditor').addEventListener('change',e=>selectMaterial(e.target.value));
-$('addPrinter').onclick=async()=>{const name=prompt('Nombre de la nueva impresora','Bambu Lab A1');if(name===null)return;const clean=name.trim();if(!clean){toast('Poné un nombre a la impresora.');return}const {data,error}=await sb.from('printers').insert({user_id:state.user.id,name:clean.slice(0,120),hourly_cost:0,watts:0}).select().single();if(error){toast(error.message);return}state.printers.push(data);state.printer=data;fillSettings();$('machineHourly').focus();toast('Impresora creada. Ahora completá costo/hora y consumo.')};
-$('addMaterial').onclick=async()=>{const name=prompt('Nombre del nuevo material','PLA');if(name===null)return;const clean=name.trim();if(!clean){toast('Poné un nombre al material.');return}const {data,error}=await sb.from('materials').insert({user_id:state.user.id,name:clean.slice(0,120),kg_price:0}).select().single();if(error){toast(error.message);return}state.materials.push(data);state.material=data;fillSettings();$('kgPrice').focus();toast('Material creado. Ahora completá su precio por kg.')};
+$('addPrinter').onclick=async()=>{const name=prompt('Nombre de la nueva impresora','Bambu Lab A1');if(name===null)return;const clean=name.trim();if(!clean){toast('Poné un nombre a la impresora.');return}const btn=$('addPrinter');btn.disabled=true;try{const {data,error}=await sb.from('printers').insert({user_id:state.user.id,name:clean.slice(0,120),hourly_cost:0,watts:0}).select().single();if(error){toast(error.message);return}state.printers.push(data);state.printer=data;fillSettings();$('machineHourly').focus();toast('Impresora creada. Ahora completá costo/hora y consumo.')}finally{btn.disabled=false}};
+$('addMaterial').onclick=async()=>{const name=prompt('Nombre del nuevo material','PLA');if(name===null)return;const clean=name.trim();if(!clean){toast('Poné un nombre al material.');return}const btn=$('addMaterial');btn.disabled=true;try{const {data,error}=await sb.from('materials').insert({user_id:state.user.id,name:clean.slice(0,120),kg_price:0}).select().single();if(error){toast(error.message);return}state.materials.push(data);state.material=data;fillSettings();$('kgPrice').focus();toast('Material creado. Ahora completá su precio por kg.')}finally{btn.disabled=false}};
 $('savePrinter').onclick=async()=>{if(!state.printer)return;const name=$('printerName').value.trim(),hourly=n('machineHourly'),watts=n('watts');if(!name){toast('Poné un nombre a la impresora.');return}if(hourly<0||watts<0){toast('Costo/hora y consumo no pueden ser negativos.');return}const btn=$('savePrinter');btn.disabled=true;try{const {data,error}=await sb.from('printers').update({name:name.slice(0,120),hourly_cost:hourly,watts}).eq('id',state.printer.id).select().single();if(error){toast(error.message);return}state.printer=data;state.printers=state.printers.map(x=>x.id===data.id?data:x);fillSettings();renderCalc();toast('Impresora guardada: '+data.name)}finally{btn.disabled=false}};
 $('saveMaterial').onclick=async()=>{if(!state.material)return;const name=$('materialName').value.trim(),kg=n('kgPrice');if(!name){toast('Poné un nombre al material.');return}if(kg<0){toast('El precio por kg no puede ser negativo.');return}const btn=$('saveMaterial');btn.disabled=true;try{const {data,error}=await sb.from('materials').update({name:name.slice(0,120),kg_price:kg}).eq('id',state.material.id).select().single();if(error){toast(error.message);return}state.material=data;state.materials=state.materials.map(x=>x.id===data.id?data:x);fillSettings();renderCalc();toast('Material guardado: '+data.name)}finally{btn.disabled=false}};
 $('deletePrinter').onclick=async()=>{if(state.printers.length<=1){toast('Necesitás conservar al menos una impresora.');return}if(!confirm('¿Eliminar esta impresora? Las cotizaciones guardadas no se borran.'))return;const id=state.printer.id,{error}=await sb.from('printers').delete().eq('id',id);if(error){toast(error.message);return}state.printers=state.printers.filter(x=>x.id!==id);state.printer=state.printers[0];fillSettings();renderCalc();toast('Impresora eliminada.')};
@@ -378,13 +380,13 @@ $('saveQuote').onclick=async()=>{
  if(!state.printer||!state.material){toast('Configurá primero impresora y material.');return}
  const c=calculate(),currency=$('quoteCurrency').value;if(c.invalidPricing){toast('Revisá margen y comisión antes de guardar.');return}
  if(c.totalCost<=0||c.suggestedPrice<=0){toast('Revisá tus costos: la cotización no puede quedar en cero.');return}
- btn.disabled=true;
+ const oldLabel=btn.textContent;btn.disabled=true;btn.textContent='Guardando…';
  const payload={user_id:state.user.id,name:name.slice(0,120),client_name:$('clientName').value.trim().slice(0,120)||null,printer_id:state.printer.id,material_id:state.material.id,printer_name_snapshot:state.printer.name,material_name_snapshot:state.material.name,quantity:c.quantity,grams:c.grams,print_hours:c.hours,labor_minutes:c.labor,extras:c.extras,failure_rate:c.fail*100,margin_rate:c.margin*100,commission_rate:c.commission*100,fixed_fee:c.fixedFee,sales_fee:c.salesFee,round_to:n('roundTo'),material_cost:c.materialCost,machine_cost:c.machineCost,electricity_cost:c.electricityCost,labor_cost:c.laborCost,failure_reserve:c.failureReserve,total_cost:c.totalCost,suggested_price:c.suggestedPrice,unit_price:c.unitPrice,profit:c.profit,currency};
  try{
   const {data,error}=await sb.from('quotes').insert(payload).select().single();
   if(error){if(error.message.toUpperCase().includes('FREE PLAN QUOTE LIMIT')){toast('Llegaste a las 5 cotizaciones del plan Free.');show('pro')}else toast(error.message);return}
   state.quotes.unshift(data);state.monthUsage+=1;renderHome();renderHistory();toast('Cotización guardada en la nube.');
- }finally{btn.disabled=false;renderCalc()}
+ }finally{btn.textContent=oldLabel;btn.disabled=false;renderCalc()}
 };
 function currentClientQuote(){const c=calculate();return {name:$('jobName').value.trim()||'Impresión 3D',client:$('clientName').value.trim(),quantity:c.quantity,unitPrice:c.unitPrice,price:c.suggestedPrice,currency:$('quoteCurrency').value,invalid:c.invalidPricing}}
 $('previewClientQuote').onclick=()=>{const q=currentClientQuote();if(q.invalid){toast('Revisá margen y comisión primero.');return}openClientQuote(q)};
