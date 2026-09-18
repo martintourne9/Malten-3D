@@ -207,6 +207,8 @@ try{
  }
 }
 const SUPABASE_URL='https://fophrvfeftitkgvbuzxu.supabase.co';
+const APP_PATH=(location.pathname==='/printcost3d'||location.pathname.startsWith('/printcost3d/'))?'/printcost3d/':'/';
+const AUTH_REDIRECT=location.origin+APP_PATH;
 const SUPABASE_KEY='sb_publishable_6wJJwbCXiqHUpigCMt8KNw_30Pf6vRt';
 const sb=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const $=id=>document.getElementById(id);
@@ -351,7 +353,7 @@ $('authForm').onsubmit=async e=>{
      authMessage('Contraseña actualizada. Ya podés seguir usando PrintCost 3D.','ok');recoveryMode=false;await loadData();return;
    }
    if(authMode==='signup'){
-     const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+'/printcost3d/'}});
+     const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:AUTH_REDIRECT}});
      if(error)throw error;
      if(data.session){await loadData()}else authMessage('Cuenta creada. Revisá tu email para confirmar y luego volvé a iniciar sesión.','ok');
    }else{
@@ -363,7 +365,7 @@ $('authForm').onsubmit=async e=>{
 $('forgotBtn').onclick=async()=>{
  const email=$('authEmail').value.trim();if(!email){authMessage('Escribí tu email primero.','error');return}
  const btn=$('forgotBtn');btn.disabled=true;const old=btn.textContent;btn.textContent='Enviando…';
- try{const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+'/printcost3d/'});
+ try{const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:AUTH_REDIRECT});
  authMessage(error?error.message:'Te enviamos un enlace. Abrilo desde tu email para elegir una contraseña nueva.',error?'error':'ok');}
  finally{btn.disabled=false;btn.textContent=old}
 };
