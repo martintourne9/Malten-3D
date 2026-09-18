@@ -1,0 +1,13 @@
+import { createClient } from "@/lib/supabase/server";
+import { updateWorkshop } from "@/app/actions/settings";
+
+export default async function Settings({ searchParams }: { searchParams: Promise<Record<string,string|string[]|undefined>> }) {
+  const params = await searchParams; const supabase = await createClient();
+  const { data: claims } = await supabase.auth.getClaims(); const userId = claims?.claims?.sub!;
+  const [{ data: printer }, { data: material }, { data: profile }] = await Promise.all([
+    supabase.from("printers").select("id,name,hourly_cost,watts").order("created_at").limit(1).maybeSingle(),
+    supabase.from("materials").select("id,name,kg_price").order("created_at").limit(1).maybeSingle(),
+    supabase.from("profiles").select("electricity_rate,labor_hourly,currency,plan").eq("id", userId).single(),
+  ]);
+  return <div className="pageStack"><div><div className="eyebrow">AJUSTES</div><h1>Tu taller</h1><p className="muted">Estos valores alimentan todas las cotizaciones.</p></div>{params.saved && <div className="alert ok">Configuración guardada.</div>}{params.error && <div className="alert error">{String(params.error)}</div>}<form action={updateWorkshop} className="settingsGrid"><section className="panel formPanel"><h2>Impresora</h2><input type="hidden" name="printerId" value={printer?.id || ""}/><label>Nombre<input name="printerName" defaultValue={printer?.name || "Bambu Lab A1"}/></label><label>Costo de máquina / hora<input name="machineHourly" type="number" min="0" step="0.01" defaultValue={Number(printer?.hourly_cost || 18)}/></label><label>Consumo promedio (W)<input name="watts" type="number" min="0" defaultValue={Number(printer?.watts || 100)}/></label></section><section className="panel formPanel"><h2>Material</h2><input type="hidden" name="materialId" value={material?.id || ""}/><label>Nombre<input name="materialName" defaultValue={material?.name || "PLA"}/></label><label>Precio por kg<input name="kgPrice" type="number" min="0" step="0.01" defaultValue={Number(material?.kg_price || 700)}/></label></section><section className="panel formPanel"><h2>Costos generales</h2><label>Electricidad por kWh<input name="electricityRate" type="number" min="0" step="0.01" defaultValue={Number(profile?.electricity_rate || 11.5)}/></label><label>Tu hora de trabajo<input name="laborHourly" type="number" min="0" step="0.01" defaultValue={Number(profile?.labor_hourly || 250)}/></label><label>Moneda<select name="currency" defaultValue={profile?.currency || "UYU"}><option value="UYU">UYU</option><option value="USD">USD</option></select></label></section><button className="primary saveSettings">Guardar configuración</button></form></div>;
+}
