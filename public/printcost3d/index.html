@@ -10,15 +10,15 @@
 :root{--bg:#f4f7f5;--card:#fff;--ink:#122019;--muted:#66736c;--line:#dde6e1;--brand:#0f6b4f;--brand2:#0a503b;--soft:#e8f4ef;--danger:#b42318;--warn:#855700;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .shell{max-width:1120px;margin:auto;padding:0 18px 100px}.top{height:72px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(244,247,245,.92);backdrop-filter:blur(12px);z-index:20}.brand{display:flex;align-items:center;gap:10px;font-weight:850}.mark{display:grid;place-items:center;width:39px;height:39px;border-radius:12px;background:var(--brand);color:#fff;font-size:13px}.brand small{display:block;color:var(--muted);font-weight:500;font-size:11px;margin-top:2px}
-button{border:0;border-radius:12px;padding:11px 15px;font-weight:750}.primary{background:var(--brand);color:#fff}.primary:hover{background:var(--brand2)}.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}.danger{background:#fff0ee;color:var(--danger);border:1px solid #f3cbc6}.full{width:100%}
+button{border:0;border-radius:12px;padding:11px 15px;font-weight:750}button:disabled{opacity:.5;cursor:not-allowed}.primary{background:var(--brand);color:#fff}.primary:hover{background:var(--brand2)}.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}.danger{background:#fff0ee;color:var(--danger);border:1px solid #f3cbc6}.full{width:100%}
 .card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 35px rgba(17,45,32,.06)}.eyebrow{font-size:11px;letter-spacing:.13em;font-weight:900;color:var(--brand);text-transform:uppercase}.muted{color:var(--muted)}
 .authWrap{min-height:100vh;display:grid;place-items:center;padding:24px}.auth{width:min(470px,100%);padding:32px;display:grid;gap:22px}.auth h1{font-size:38px;letter-spacing:-.04em;margin:5px 0 8px}.auth p{margin:0;color:var(--muted);line-height:1.6}.tabs{display:grid;grid-template-columns:1fr 1fr;background:#f1f4f2;border-radius:12px;padding:4px}.tabs button{background:transparent;color:var(--muted)}.tabs button.active{background:#fff;color:var(--ink);box-shadow:0 2px 10px rgba(0,0,0,.05)}.stack{display:grid;gap:14px}label{display:grid;gap:7px;font-size:13px;font-weight:750;color:#39443f}.hint{font-size:11px;line-height:1.4;color:var(--muted);font-weight:500;margin-top:-2px}input,select{width:100%;border:1px solid #cdd8d2;border-radius:11px;background:#fff;padding:12px 13px;color:var(--ink);outline:none}input:focus,select:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(15,107,79,.1)}
 .alert{padding:12px 14px;border-radius:12px;font-size:13px}.alert.ok{background:#e8f6ef;color:#145f46}.alert.error{background:#fff0ee;color:#8e1d14}.alert.warn{background:#fff6dc;color:var(--warn)}
-.screen{display:none}.screen.active{display:block}.hero{padding:30px;display:flex;justify-content:space-between;align-items:end;gap:24px}.hero h1{font-size:clamp(36px,6vw,62px);line-height:1;letter-spacing:-.055em;margin:8px 0 14px;max-width:790px}.hero p{color:var(--muted);font-size:17px;line-height:1.6;max-width:700px;margin:0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0}.stat{padding:20px;display:grid;gap:5px}.stat span,.stat small{color:var(--muted)}.stat strong{font-size:30px;letter-spacing:-.03em}.panel{padding:23px}.head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:12px}.head h2{margin:4px 0 0;font-size:28px;letter-spacing:-.03em}.rows{display:grid}.row{display:grid;grid-template-columns:2fr 1fr 1fr auto;align-items:center;gap:18px;padding:15px 0;border-bottom:1px solid var(--line)}.row:last-child{border-bottom:0}.row>div{display:grid;gap:3px}.row span{font-size:12px;color:var(--muted)}.rowActions{display:flex;gap:7px;justify-content:flex-end;flex-wrap:wrap}.mini{padding:8px 10px;font-size:12px}.historyTools{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:14px}.onboarding{padding:22px;margin-bottom:14px}.onboardingSteps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.onboardingSteps div{padding:14px;border-radius:14px;background:var(--soft)}.onboardingSteps b{display:block;margin-bottom:4px}.onboardingSteps span{font-size:12px;color:var(--muted)}.marginInfo{font-size:12px;color:#cbd8d1;margin-top:8px}.clientDialog{border:0;border-radius:22px;padding:0;width:min(520px,calc(100% - 28px));box-shadow:0 24px 80px rgba(0,0,0,.28)}.clientDialog::backdrop{background:rgba(0,0,0,.48);backdrop-filter:blur(3px)}.clientQuote{padding:28px;display:grid;gap:18px}.clientQuoteHeader{display:flex;justify-content:space-between;align-items:center;gap:16px}.clientQuotePrice{padding:20px;border-radius:16px;background:var(--soft);color:var(--brand)}.clientQuotePrice strong{display:block;font-size:38px;letter-spacing:-.04em;margin-top:4px}.clientQuoteMeta{display:grid;gap:8px;color:var(--muted);font-size:14px}.clientQuoteActions{display:flex;gap:10px}
-.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}.formCard{padding:22px;display:grid;gap:14px}.formCard h3{margin:0}.fields2{display:grid;grid-template-columns:1fr 1fr;gap:13px}.result{grid-column:1/-1;background:#122019;color:#fff;padding:24px}.result .eyebrow{color:#91d0b6}.resultTop{display:grid;grid-template-columns:1fr 1fr;gap:15px}.resultTop>div{padding:16px;border-radius:15px;background:rgba(255,255,255,.07)}.resultTop .suggest{background:#fff;color:#122019}.resultTop small{display:block;opacity:.7}.resultTop strong{font-size:34px;display:block;margin-top:4px}.break{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}.break div{background:rgba(255,255,255,.07);padding:11px;border-radius:11px}.break span{font-size:11px;display:block;color:#bdcbc4}.break strong{display:block;margin-top:4px}.profit{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.14);padding-top:14px;margin-top:12px}.actions{display:flex;gap:10px;margin-top:17px}.result .primary{background:#fff;color:#122019}.result .ghost{background:#26372f;color:#fff;border-color:#344a40}
+.screen{display:none}.screen.active{display:block}.hero{padding:30px;display:flex;justify-content:space-between;align-items:end;gap:24px}.hero h1{font-size:clamp(36px,6vw,62px);line-height:1;letter-spacing:-.055em;margin:8px 0 14px;max-width:790px}.hero p{color:var(--muted);font-size:17px;line-height:1.6;max-width:700px;margin:0}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:14px 0}.stat{padding:20px;display:grid;gap:5px}.stat span,.stat small{color:var(--muted)}.stat strong{font-size:30px;letter-spacing:-.03em}.panel{padding:23px}.head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:12px}.head h2{margin:4px 0 0;font-size:28px;letter-spacing:-.03em}.rows{display:grid}.row{display:grid;grid-template-columns:2fr 1fr 1fr auto;align-items:center;gap:18px;padding:15px 0;border-bottom:1px solid var(--line)}.row:last-child{border-bottom:0}.row>div{display:grid;gap:3px}.row span{font-size:12px;color:var(--muted)}.rowActions{display:flex;gap:7px;justify-content:flex-end;flex-wrap:wrap}.mini{padding:8px 10px;font-size:12px}.historyTools{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:14px}.onboarding{padding:22px;margin-bottom:14px}.onboardingSteps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.onboardingSteps div{padding:14px;border-radius:14px;background:var(--soft)}.onboardingSteps b{display:block;margin-bottom:4px}.onboardingSteps span{font-size:12px;color:var(--muted)}.marginInfo{font-size:12px;color:#cbd8d1;margin-top:8px}.clientDialog{border:0;border-radius:22px;padding:0;width:min(520px,calc(100% - 28px));box-shadow:0 24px 80px rgba(0,0,0,.28)}.clientDialog::backdrop{background:rgba(0,0,0,.48);backdrop-filter:blur(3px)}.clientQuote{padding:28px;display:grid;gap:18px}.clientQuoteHeader{display:flex;justify-content:space-between;align-items:center;gap:16px}.clientQuotePrice{padding:20px;border-radius:16px;background:var(--soft);color:var(--brand)}.clientQuotePrice strong{display:block;font-size:38px;letter-spacing:-.04em;margin-top:4px}.clientQuoteMeta{display:grid;gap:8px;color:var(--muted);font-size:14px}.clientQuoteActions{display:flex;gap:10px}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}.formCard{padding:22px;display:grid;gap:14px}.formCard h3{margin:0}.fields2{display:grid;grid-template-columns:1fr 1fr;gap:13px}.result{grid-column:1/-1;background:#122019;color:#fff;padding:24px}.result .eyebrow{color:#91d0b6}.resultTop{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.resultTop>div{padding:16px;border-radius:15px;background:rgba(255,255,255,.07)}.resultTop .suggest{background:#fff;color:#122019}.resultTop small{display:block;opacity:.7}.resultTop strong{font-size:34px;display:block;margin-top:4px}.break{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px;margin:14px 0}.break div{background:rgba(255,255,255,.07);padding:11px;border-radius:11px}.break span{font-size:11px;display:block;color:#bdcbc4}.break strong{display:block;margin-top:4px}.profit{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.14);padding-top:14px;margin-top:12px}.actions{display:flex;gap:10px;margin-top:17px}.result .primary{background:#fff;color:#122019}.result .ghost{background:#26372f;color:#fff;border-color:#344a40}
 .settings{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.settings .card{padding:21px;display:grid;gap:13px}.settings h3{margin:0}.priceGrid{display:grid;grid-template-columns:1fr 1.1fr;gap:16px}.plan{padding:25px;display:grid;gap:13px}.plan h3{margin:0}.price{font-size:42px;font-weight:900;letter-spacing:-.04em}.pill{justify-self:start;padding:6px 9px;border-radius:999px;background:var(--soft);color:var(--brand);font-size:11px;font-weight:900}.plan ul{margin:0;padding-left:20px;color:var(--muted);display:grid;gap:8px}.featured{outline:2px solid var(--brand)}
 .nav{position:fixed;left:50%;transform:translateX(-50%);bottom:10px;width:min(720px,calc(100% - 24px));display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:7px;background:rgba(18,32,25,.95);backdrop-filter:blur(12px);border-radius:17px;z-index:30;box-shadow:0 15px 45px rgba(0,0,0,.25)}.nav button{background:transparent;color:#9caf9f;padding:10px 4px;font-size:12px}.nav button.active{background:#fff;color:#122019}.toast{position:fixed;left:50%;bottom:88px;transform:translate(-50%,20px);background:#122019;color:#fff;padding:12px 16px;border-radius:12px;opacity:0;pointer-events:none;transition:.2s;z-index:50;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.empty{padding:25px 0;color:var(--muted);text-align:center}
-@media(max-width:760px){.shell{padding-left:12px;padding-right:12px}.onboardingSteps{grid-template-columns:1fr}.historyTools{grid-template-columns:1fr}.rowActions{grid-column:1/-1;justify-content:flex-start}.clientQuoteActions{flex-direction:column}.brand small{display:none}.hero{padding:21px;display:block}.hero h1{font-size:41px}.hero .primary{width:100%;margin-top:20px}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:1/-1}.formGrid,.settings,.priceGrid{grid-template-columns:1fr}.fields2,.resultTop{grid-template-columns:1fr}.break{grid-template-columns:1fr 1fr}.row{grid-template-columns:1.7fr 1fr}.row>div:nth-child(3){display:none}.head h2{font-size:24px}.auth{padding:25px 19px}.nav button{font-size:11px}.actions{flex-direction:column}}
+@media(max-width:760px){.shell{padding-left:12px;padding-right:12px}.onboardingSteps{grid-template-columns:1fr}.historyTools{grid-template-columns:1fr}.rowActions{grid-column:1/-1;justify-content:flex-start}.clientQuoteActions{flex-direction:column}.brand small{display:none}.hero{padding:21px;display:block}.hero h1{font-size:41px}.hero .primary{width:100%;margin-top:20px}.stats{grid-template-columns:1fr 1fr}.formGrid,.settings,.priceGrid{grid-template-columns:1fr}.fields2,.resultTop{grid-template-columns:1fr}.break{grid-template-columns:1fr 1fr}.row{grid-template-columns:1.7fr 1fr}.row>div:nth-child(3){display:none}.head h2{font-size:24px}.auth{padding:25px 19px}.nav button{font-size:11px}.actions{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -55,8 +55,9 @@ button{border:0;border-radius:12px;padding:11px 15px;font-weight:750}.primary{ba
         <button class="primary" data-go="quote">Nueva cotización</button>
       </article>
       <div class="stats">
-        <article class="stat card"><span>Cotizaciones</span><strong id="statQuotes">0</strong><small>guardadas</small></article>
-        <article class="stat card"><span>Ganancia histórica</span><strong id="statProfit">$0</strong><small>estimada</small></article>
+        <article class="stat card"><span>Cotizaciones este mes</span><strong id="statQuotesMonth">0</strong><small>presupuestos</small></article>
+        <article class="stat card"><span>Valor cotizado</span><strong id="statRevenueMonth">$0</strong><small>este mes</small></article>
+        <article class="stat card"><span>Ganancia potencial</span><strong id="statProfitMonth">$0</strong><small>este mes</small></article>
         <article class="stat card"><span>Uso este mes</span><strong id="statUsage">0/5</strong><small id="statPlan">Plan Free</small></article>
       </div>
       <article class="card panel"><div class="head"><div><div class="eyebrow">ACTIVIDAD</div><h2>Últimas cotizaciones</h2></div><button class="ghost" data-go="history">Ver todas</button></div><div id="recentRows" class="rows"></div></article>
@@ -68,20 +69,23 @@ button{border:0;border-radius:12px;padding:11px 15px;font-weight:750}.primary{ba
         <article class="card formCard"><h3>1. Pieza</h3><div class="fields2">
           <label>Nombre<input id="jobName" placeholder="Ej. Llavero personalizado"></label>
           <label>Cliente<input id="clientName" placeholder="Opcional"></label>
-          <label>Gramos<input id="grams" type="number" min="0" step=".1" value="50"></label>
-          <label>Horas de impresión<input id="hours" type="number" min="0" step=".1" value="4"></label>
-          <label>Trabajo manual (min)<input id="laborMinutes" type="number" min="0" value="15"></label>
-          <label>Extras / packaging<input id="extras" type="number" min="0" step=".01" value="0"></label>
+          <label>Cantidad<input id="quantity" type="number" min="1" step="1" value="1"><span class="hint">Unidades incluidas en este lote.</span></label>
+          <label>Gramos del lote<input id="grams" type="number" min="0" step=".1" value="50"><span class="hint">Material total de todas las unidades.</span></label>
+          <label>Horas de impresión del lote<input id="hours" type="number" min="0" step=".1" value="4"><span class="hint">Tiempo total estimado del trabajo.</span></label>
+          <label>Trabajo manual total (min)<input id="laborMinutes" type="number" min="0" value="15"></label>
+          <label>Extras / packaging del lote<input id="extras" type="number" min="0" step=".01" value="0"></label>
         </div></article>
         <article class="card formCard"><h3>2. Rentabilidad</h3><div class="fields2">
           <label>Riesgo de falla (%)<input id="failureRate" type="number" min="0" max="100" value="8"></label>
-          <label>Margen objetivo (%)<input id="marginRate" type="number" min="1" max="95" value="55"><span class="hint">Margen sobre el precio final, no un simple recargo.</span></label>
+          <label>Margen objetivo (%)<input id="marginRate" type="number" min="1" max="90" value="55"><span class="hint">Margen neto buscado sobre el precio final.</span></label>
+          <label>Comisión de venta (%)<input id="commissionRate" type="number" min="0" max="80" step=".1" value="0"><span class="hint">Ej. marketplace, tarjeta o pasarela de pago.</span></label>
+          <label>Cargo fijo por venta<input id="fixedFee" type="number" min="0" step=".01" value="0"><span class="hint">Se aplica una vez al pedido completo.</span></label>
           <label>Redondear a<select id="roundTo"><option>1</option><option>5</option><option selected>10</option><option>50</option><option>100</option></select></label>
           <label>Moneda del taller<input id="quoteCurrency" value="UYU" disabled><span class="hint">Se cambia en Ajustes para evitar presupuestos sin conversión real.</span></label>
         </div></article>
         <article class="card result">
           <div class="eyebrow">RESULTADO</div>
-          <div class="resultTop"><div><small>Costo real</small><strong id="totalCost">$0</strong></div><div class="suggest"><small>Precio sugerido</small><strong id="suggestedPrice">$0</strong></div></div>
+          <div class="resultTop"><div><small>Costo de producción</small><strong id="totalCost">$0</strong></div><div class="suggest"><small>Precio total sugerido</small><strong id="suggestedPrice">$0</strong></div><div><small>Precio por unidad</small><strong id="unitPrice">$0</strong></div></div>
           <div id="breakdown" class="break"></div>
           <div class="profit"><span>Ganancia estimada</span><strong id="profit">$0</strong></div>
           <div id="marginInfo" class="marginInfo"></div>
@@ -143,25 +147,30 @@ const esc=(s='')=>String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'
 const n=id=>Number($(id)?.value)||0;
 function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2800)}
 function money(v,c=state.profile?.currency||'UYU'){return new Intl.NumberFormat(c==='UYU'?'es-UY':'en-US',{style:'currency',currency:c,maximumFractionDigits:c==='UYU'?0:2}).format(Number(v)||0)}
-function monthCount(){const now=new Date();return state.quotes.filter(q=>{const d=new Date(q.created_at);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()}).length}
+function monthQuotes(){const now=new Date();return state.quotes.filter(q=>{const d=new Date(q.created_at);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()})}
+function monthCount(){return monthQuotes().length}
+function sumText(list,key){const totals={};for(const q of list){const cur=q.currency||state.profile?.currency||'UYU';totals[cur]=(totals[cur]||0)+Number(q[key]||0)}return Object.entries(totals).map(([cur,total])=>money(total,cur)).join(' + ')||money(0)}
 function roundUp(v,s){s=Number(s)||1;return Math.ceil(v/s)*s}
 function calculate(){
- const grams=n('grams'),hours=n('hours'),labor=n('laborMinutes'),extras=n('extras'),fail=n('failureRate')/100,margin=Math.min(.95,Math.max(.01,n('marginRate')/100));
+ const quantity=Math.max(1,Math.floor(n('quantity')||1)),grams=n('grams'),hours=n('hours'),labor=n('laborMinutes'),extras=n('extras'),fail=n('failureRate')/100,margin=Math.min(.90,Math.max(.01,n('marginRate')/100)),commission=Math.min(.80,Math.max(0,n('commissionRate')/100)),fixedFee=Math.max(0,n('fixedFee'));
  const materialCost=(grams/1000)*Number(state.material?.kg_price||0);
  const machineCost=hours*Number(state.printer?.hourly_cost||0);
  const electricityCost=hours*(Number(state.printer?.watts||0)/1000)*Number(state.profile?.electricity_rate||0);
  const laborCost=(labor/60)*Number(state.profile?.labor_hourly||0);
  const direct=materialCost+machineCost+electricityCost+laborCost+extras;
- const failureReserve=direct*fail,totalCost=direct+failureReserve,suggestedPrice=roundUp(totalCost/(1-margin),n('roundTo')),profit=suggestedPrice-totalCost;
+ const failureReserve=direct*fail,totalCost=direct+failureReserve,denominator=1-margin-commission,invalidPricing=denominator<=.05;
+ const suggestedPrice=invalidPricing?0:roundUp((totalCost+fixedFee)/denominator,n('roundTo'));
+ const salesFee=suggestedPrice*commission+fixedFee,profit=suggestedPrice-totalCost-salesFee,unitPrice=suggestedPrice/quantity;
  const achievedMargin=suggestedPrice>0?profit/suggestedPrice:0,markup=totalCost>0?profit/totalCost:0;
- return {grams,hours,labor,extras,fail,margin,materialCost,machineCost,electricityCost,laborCost,failureReserve,totalCost,suggestedPrice,profit,achievedMargin,markup};
+ return {quantity,grams,hours,labor,extras,fail,margin,commission,fixedFee,materialCost,machineCost,electricityCost,laborCost,failureReserve,totalCost,salesFee,suggestedPrice,unitPrice,profit,achievedMargin,markup,invalidPricing};
 }
 function renderCalc(){
  if(!state.profile)return;
  const c=calculate(),currency=$('quoteCurrency').value||state.profile.currency;
- $('totalCost').textContent=money(c.totalCost,currency);$('suggestedPrice').textContent=money(c.suggestedPrice,currency);$('profit').textContent=money(c.profit,currency);
- $('marginInfo').textContent='Margen final '+(c.achievedMargin*100).toFixed(1)+'% · Recargo sobre costo '+(c.markup*100).toFixed(1)+'%';
- $('breakdown').innerHTML=[['Material',c.materialCost],['Máquina',c.machineCost],['Luz',c.electricityCost],['Trabajo',c.laborCost],['Fallas',c.failureReserve]].map(([a,b])=>'<div><span>'+a+'</span><strong>'+money(b,currency)+'</strong></div>').join('');
+ $('totalCost').textContent=money(c.totalCost,currency);$('suggestedPrice').textContent=c.invalidPricing?'—':money(c.suggestedPrice,currency);$('unitPrice').textContent=c.invalidPricing?'—':money(c.unitPrice,currency);$('profit').textContent=c.invalidPricing?'—':money(c.profit,currency);
+ $('marginInfo').textContent=c.invalidPricing?'Revisá los porcentajes: margen + comisión dejan muy poco espacio para calcular un precio.':'Margen final '+(c.achievedMargin*100).toFixed(1)+'% · Recargo sobre costo '+(c.markup*100).toFixed(1)+'% · '+c.quantity+' unidad'+(c.quantity===1?'':'es');
+ $('saveQuote').disabled=c.invalidPricing;
+ $('breakdown').innerHTML=[['Material',c.materialCost],['Máquina',c.machineCost],['Luz',c.electricityCost],['Trabajo',c.laborCost],['Fallas',c.failureReserve],['Venta/comisión',c.salesFee]].map(([a,b])=>'<div><span>'+a+'</span><strong>'+money(b,currency)+'</strong></div>').join('');
 }
 function show(name){
  document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id===name));
@@ -170,15 +179,11 @@ function show(name){
 }
 function row(q,withActions=false){
  const actions=withActions?'<div class="rowActions"><button class="ghost mini" data-client="'+q.id+'">Cliente</button><button class="ghost mini" data-duplicate="'+q.id+'">Duplicar</button><button class="danger mini" data-delete="'+q.id+'">Eliminar</button></div>':'<span></span>';
- return '<div class="row"><div><b>'+esc(q.name)+'</b><span>'+esc(q.client_name||'Sin cliente')+' · '+new Date(q.created_at).toLocaleDateString('es-UY')+'</span></div><div><span>Precio</span><b>'+money(q.suggested_price,q.currency)+'</b></div><div><span>Ganancia</span><b>'+money(q.profit,q.currency)+'</b></div>'+actions+'</div>';
-}
-function profitText(){
- const totals={};for(const q of state.quotes){const cur=q.currency||state.profile?.currency||'UYU';totals[cur]=(totals[cur]||0)+Number(q.profit||0)}
- return Object.entries(totals).map(([cur,total])=>money(total,cur)).join(' + ')||money(0);
+ return '<div class="row"><div><b>'+esc(q.name)+'</b><span>'+esc(q.client_name||'Sin cliente')+' · '+(Number(q.quantity||1)>1?Number(q.quantity)+' un. · ':'')+new Date(q.created_at).toLocaleDateString('es-UY')+'</span></div><div><span>Precio</span><b>'+money(q.suggested_price,q.currency)+'</b></div><div><span>Ganancia</span><b>'+money(q.profit,q.currency)+'</b></div>'+actions+'</div>';
 }
 function renderHome(){
- const pro=state.profile?.plan!=='free';
- $('statQuotes').textContent=state.quotes.length;$('statProfit').textContent=profitText();$('statUsage').textContent=pro?String(monthCount()):monthCount()+'/5';$('statPlan').textContent=pro?'Plan '+state.profile.plan:'Plan Free';$('planTop').textContent=(state.profile?.plan||'free').toUpperCase();
+ const pro=state.profile?.plan!=='free',month=monthQuotes();
+ $('statQuotesMonth').textContent=month.length;$('statRevenueMonth').textContent=sumText(month,'suggested_price');$('statProfitMonth').textContent=sumText(month,'profit');$('statUsage').textContent=pro?String(month.length):month.length+'/5';$('statPlan').textContent=pro?'Plan '+state.profile.plan:'Plan Free';$('planTop').textContent=(state.profile?.plan||'free').toUpperCase();
  $('recentRows').innerHTML=state.quotes.slice(0,4).map(q=>row(q)).join('')||'<div class="empty">Todavía no guardaste cotizaciones.</div>';
  const onboardingDone=localStorage.getItem('pc3d_onboarding_done')==='1';$('onboarding').classList.toggle('hidden',onboardingDone||state.quotes.length>0);
 }
@@ -191,10 +196,10 @@ function filteredHistory(){
  });
 }
 function renderHistory(){const list=filteredHistory();$('historyRows').innerHTML=list.map(q=>row(q,true)).join('')||'<div class="empty">No encontramos cotizaciones con ese filtro.</div>'}
-function clientQuoteText(q){return 'Presupuesto · '+q.name+(q.client?'\nCliente: '+q.client:'')+'\nPrecio: '+money(q.price,q.currency)+'\n\nPresupuesto sujeto a confirmación de disponibilidad y detalles finales.\nGenerado con PrintCost 3D'}
+function clientQuoteText(q){return 'Presupuesto · '+q.name+(q.client?'\nCliente: '+q.client:'')+(q.quantity>1?'\nCantidad: '+q.quantity+'\nPrecio unitario: '+money(q.unitPrice,q.currency):'')+'\nPrecio total: '+money(q.price,q.currency)+'\n\nPresupuesto sujeto a confirmación de disponibilidad y detalles finales.\nGenerado con PrintCost 3D'}
 function openClientQuote(q){
  state.clientQuote=q;$('clientQuoteName').textContent=q.name;$('clientQuotePrice').textContent=money(q.price,q.currency);
- $('clientQuoteMeta').innerHTML=(q.client?'<div><b>Cliente:</b> '+esc(q.client)+'</div>':'')+'<div><b>Fecha:</b> '+new Date().toLocaleDateString('es-UY')+'</div>';
+ $('clientQuoteMeta').innerHTML=(q.client?'<div><b>Cliente:</b> '+esc(q.client)+'</div>':'')+(q.quantity>1?'<div><b>Cantidad:</b> '+q.quantity+' · <b>Por unidad:</b> '+money(q.unitPrice,q.currency)+'</div>':'')+'<div><b>Fecha:</b> '+new Date().toLocaleDateString('es-UY')+'</div>';
  $('clientQuoteDialog').showModal();
 }
 async function shareClientQuote(q){const text=clientQuoteText(q);try{if(navigator.share)await navigator.share({title:'Presupuesto · '+q.name,text});else{await navigator.clipboard.writeText(text);toast('Presupuesto copiado.')}}catch{}}
@@ -261,27 +266,27 @@ $('logoutBtn').onclick=async()=>{await sb.auth.signOut();location.reload()};
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
 $('dismissOnboarding').onclick=()=>{localStorage.setItem('pc3d_onboarding_done','1');$('onboarding').classList.add('hidden')};
 $('historySearch').addEventListener('input',renderHistory);$('historyPeriod').addEventListener('change',renderHistory);
-['grams','hours','laborMinutes','extras','failureRate','marginRate','roundTo','quoteCurrency'].forEach(id=>$(id).addEventListener('input',renderCalc));
-$('resetQuote').onclick=()=>{$('jobName').value='';$('clientName').value='';$('grams').value=50;$('hours').value=4;$('laborMinutes').value=15;$('extras').value=0;$('failureRate').value=8;$('marginRate').value=55;$('roundTo').value=10;renderCalc()};
+['quantity','grams','hours','laborMinutes','extras','failureRate','marginRate','commissionRate','fixedFee','roundTo'].forEach(id=>$(id).addEventListener('input',renderCalc));
+$('resetQuote').onclick=()=>{$('jobName').value='';$('clientName').value='';$('quantity').value=1;$('grams').value=50;$('hours').value=4;$('laborMinutes').value=15;$('extras').value=0;$('failureRate').value=8;$('marginRate').value=55;$('commissionRate').value=0;$('fixedFee').value=0;$('roundTo').value=10;renderCalc()};
 $('saveQuote').onclick=async()=>{
  const name=$('jobName').value.trim();if(!name){toast('Poné un nombre a la pieza.');return}
  if(!state.printer||!state.material){toast('Configurá primero impresora y material.');return}
- const c=calculate(),currency=$('quoteCurrency').value;
- const payload={user_id:state.user.id,name:name.slice(0,120),client_name:$('clientName').value.trim().slice(0,120)||null,printer_id:state.printer.id,material_id:state.material.id,grams:c.grams,print_hours:c.hours,labor_minutes:c.labor,extras:c.extras,failure_rate:c.fail*100,margin_rate:c.margin*100,round_to:n('roundTo'),material_cost:c.materialCost,machine_cost:c.machineCost,electricity_cost:c.electricityCost,labor_cost:c.laborCost,failure_reserve:c.failureReserve,total_cost:c.totalCost,suggested_price:c.suggestedPrice,profit:c.profit,currency};
+ const c=calculate(),currency=$('quoteCurrency').value;if(c.invalidPricing){toast('Revisá margen y comisión antes de guardar.');return}
+ const payload={user_id:state.user.id,name:name.slice(0,120),client_name:$('clientName').value.trim().slice(0,120)||null,printer_id:state.printer.id,material_id:state.material.id,quantity:c.quantity,grams:c.grams,print_hours:c.hours,labor_minutes:c.labor,extras:c.extras,failure_rate:c.fail*100,margin_rate:c.margin*100,commission_rate:c.commission*100,fixed_fee:c.fixedFee,sales_fee:c.salesFee,round_to:n('roundTo'),material_cost:c.materialCost,machine_cost:c.machineCost,electricity_cost:c.electricityCost,labor_cost:c.laborCost,failure_reserve:c.failureReserve,total_cost:c.totalCost,suggested_price:c.suggestedPrice,unit_price:c.unitPrice,profit:c.profit,currency};
  const {data,error}=await sb.from('quotes').insert(payload).select().single();
  if(error){if(error.message.toUpperCase().includes('FREE PLAN QUOTE LIMIT')){toast('Llegaste a las 5 cotizaciones del plan Free.');show('pro')}else toast(error.message);return}
  state.quotes.unshift(data);renderHome();renderHistory();toast('Cotización guardada en la nube.');
 };
-function currentClientQuote(){const c=calculate();return {name:$('jobName').value.trim()||'Impresión 3D',client:$('clientName').value.trim(),price:c.suggestedPrice,currency:$('quoteCurrency').value}}
-$('previewClientQuote').onclick=()=>openClientQuote(currentClientQuote());
-$('shareQuote').onclick=()=>shareClientQuote(currentClientQuote());
+function currentClientQuote(){const c=calculate();return {name:$('jobName').value.trim()||'Impresión 3D',client:$('clientName').value.trim(),quantity:c.quantity,unitPrice:c.unitPrice,price:c.suggestedPrice,currency:$('quoteCurrency').value,invalid:c.invalidPricing}}
+$('previewClientQuote').onclick=()=>{const q=currentClientQuote();if(q.invalid){toast('Revisá margen y comisión primero.');return}openClientQuote(q)};
+$('shareQuote').onclick=()=>{const q=currentClientQuote();if(q.invalid){toast('Revisá margen y comisión primero.');return}shareClientQuote(q)};
 $('closeClientQuote').onclick=()=>$('clientQuoteDialog').close();
 $('shareClientDialog').onclick=()=>state.clientQuote&&shareClientQuote(state.clientQuote);
 $('copyClientDialog').onclick=async()=>{if(!state.clientQuote)return;await navigator.clipboard.writeText(clientQuoteText(state.clientQuote));toast('Texto copiado.')};
 $('historyRows').onclick=async e=>{
  const deleteId=e.target.dataset.delete,dupId=e.target.dataset.duplicate,clientId=e.target.dataset.client;
- if(clientId){const q=state.quotes.find(x=>x.id===clientId);if(q)openClientQuote({name:q.name,client:q.client_name||'',price:Number(q.suggested_price),currency:q.currency});return}
- if(dupId){const q=state.quotes.find(x=>x.id===dupId);if(!q)return;$('jobName').value='Copia de '+q.name;$('clientName').value=q.client_name||'';$('grams').value=q.grams;$('hours').value=q.print_hours;$('laborMinutes').value=q.labor_minutes;$('extras').value=q.extras;$('failureRate').value=q.failure_rate;$('marginRate').value=q.margin_rate;$('roundTo').value=q.round_to;$('quoteCurrency').value=state.profile.currency;renderCalc();show('quote');toast('Datos copiados. El precio se recalculó con tus costos actuales.');return}
+ if(clientId){const q=state.quotes.find(x=>x.id===clientId);if(q)openClientQuote({name:q.name,client:q.client_name||'',quantity:Number(q.quantity||1),unitPrice:Number(q.unit_price||q.suggested_price),price:Number(q.suggested_price),currency:q.currency});return}
+ if(dupId){const q=state.quotes.find(x=>x.id===dupId);if(!q)return;$('jobName').value='Copia de '+q.name;$('clientName').value=q.client_name||'';$('quantity').value=q.quantity||1;$('grams').value=q.grams;$('hours').value=q.print_hours;$('laborMinutes').value=q.labor_minutes;$('extras').value=q.extras;$('failureRate').value=q.failure_rate;$('marginRate').value=q.margin_rate;$('commissionRate').value=q.commission_rate||0;$('fixedFee').value=q.fixed_fee||0;$('roundTo').value=q.round_to;$('quoteCurrency').value=state.profile.currency;renderCalc();show('quote');toast('Datos copiados. El precio se recalculó con tus costos actuales.');return}
  if(!deleteId)return;if(!confirm('¿Eliminar esta cotización?'))return;const {error}=await sb.from('quotes').delete().eq('id',deleteId);if(error){toast(error.message);return}state.quotes=state.quotes.filter(q=>q.id!==deleteId);renderHome();renderHistory();toast('Cotización eliminada.');
 };
 $('saveSettings').onclick=async()=>{
