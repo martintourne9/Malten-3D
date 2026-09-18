@@ -161,9 +161,9 @@ button{border:0;border-radius:12px;padding:11px 15px;font-weight:750}button:disa
     <section id="settings" class="screen">
       <div class="head"><div><div class="eyebrow">AJUSTES</div><h2>Tu taller</h2></div></div>
       <div class="settings">
-        <article class="card"><h3>Impresoras</h3><div class="editorBar"><select id="printerEditor"></select><button id="addPrinter" class="ghost" type="button">+ Nueva</button><button id="deletePrinter" class="danger" type="button">Eliminar</button></div><div id="printerDetail" class="resourceDetail"></div><label>Nombre<input id="printerName" placeholder="Ej. Bambu Lab A1"></label><label>Costo de máquina / hora<input id="machineHourly" type="number" min="0" step=".01"></label><label>Consumo promedio (W)<input id="watts" type="number" min="0"></label><button id="savePrinter" class="primary" type="button">Guardar impresora</button></article>
+        <article class="card"><h3>Impresoras</h3><div class="editorBar"><select id="printerEditor"></select><button id="addPrinter" class="ghost" type="button">+ Nueva</button><button id="deletePrinter" class="danger" type="button">Eliminar</button></div><div id="printerDetail" class="resourceDetail"></div><label>Nombre<input id="printerName" placeholder="Ej. Bambu Lab A1"></label><label>Costo de máquina / hora<input id="machineHourly" type="number" min="0" step=".01"><span class="hint">Usá depreciación, mantenimiento y desgaste. No sumes electricidad: se calcula aparte.</span></label><label>Consumo promedio (W)<input id="watts" type="number" min="0"></label><button id="savePrinter" class="primary" type="button">Guardar impresora</button></article>
         <article class="card"><h3>Materiales</h3><div class="editorBar"><select id="materialEditor"></select><button id="addMaterial" class="ghost" type="button">+ Nuevo</button><button id="deleteMaterial" class="danger" type="button">Eliminar</button></div><div id="materialDetail" class="resourceDetail"></div><label>Nombre<input id="materialName" placeholder="Ej. PLA negro"></label><label>Precio por kg<input id="kgPrice" type="number" min="0" step=".01"></label><button id="saveMaterial" class="primary" type="button">Guardar material</button></article>
-        <article class="card"><h3>Costos generales</h3><label>Electricidad por kWh<input id="electricityRate" type="number" min="0" step=".01"></label><label>Tu hora de trabajo<input id="laborHourly" type="number" min="0" step=".01"></label><label>Moneda<select id="currency"><option value="UYU">UYU</option><option value="USD">USD</option></select></label></article>
+        <article class="card"><h3>Costos generales</h3><label>Electricidad por kWh<input id="electricityRate" type="number" min="0" step=".01"></label><label>Tu hora de trabajo<input id="laborHourly" type="number" min="0" step=".01"></label><label>Moneda<select id="currency"><option value="UYU">UYU</option><option value="USD">USD</option></select><span class="hint">Cambiar la moneda no convierte automáticamente tus costos ni precios guardados.</span></label></article>
         <article class="card"><h3>Beta feedback</h3><label>Tipo<select id="feedbackType"><option value="idea">Idea / mejora</option><option value="bug">Problema</option><option value="other">Otro</option></select></label><label>Contanos qué mejorar<textarea id="feedbackMessage" maxlength="2000" placeholder="Ej. Me gustaría poder guardar clientes frecuentes..."></textarea></label><button id="sendFeedback" class="ghost" type="button">Enviar feedback</button><span class="hint">Se guarda asociado a tu cuenta para poder priorizar mejoras reales.</span></article>
       </div>
       <button id="saveSettings" class="primary" style="margin-top:14px">Guardar costos generales</button>
@@ -212,7 +212,7 @@ function monthCount(){return monthQuotes().length}
 function sumText(list,key){const totals={};for(const q of list){const cur=q.currency||state.profile?.currency||'UYU';totals[cur]=(totals[cur]||0)+Number(q[key]||0)}return Object.entries(totals).map(([cur,total])=>money(total,cur)).join(' + ')||money(0)}
 function roundUp(v,s){s=Number(s)||1;return Math.ceil(v/s)*s}
 function calculate(){
- const quantity=Math.max(1,Math.floor(n('quantity')||1)),grams=n('grams'),hours=n('hours'),labor=n('laborMinutes'),extras=n('extras'),fail=n('failureRate')/100,margin=Math.min(.90,Math.max(.01,n('marginRate')/100)),commission=Math.min(.80,Math.max(0,n('commissionRate')/100)),fixedFee=Math.max(0,n('fixedFee'));
+ const quantity=Math.max(1,Math.floor(n('quantity')||1)),grams=n('grams'),hours=n('hours'),labor=n('laborMinutes'),extras=n('extras'),fail=Math.min(1,Math.max(0,n('failureRate')/100)),margin=Math.min(.90,Math.max(.01,n('marginRate')/100)),commission=Math.min(.80,Math.max(0,n('commissionRate')/100)),fixedFee=Math.max(0,n('fixedFee'));
  const materialCost=(grams/1000)*Number(state.material?.kg_price||0);
  const machineCost=hours*Number(state.printer?.hourly_cost||0);
  const electricityCost=hours*(Number(state.printer?.watts||0)/1000)*Number(state.profile?.electricity_rate||0);
@@ -383,7 +383,9 @@ $('historyRows').onclick=async e=>{
  if(!deleteId)return;if(!confirm('¿Eliminar esta cotización?'))return;const {error}=await sb.from('quotes').delete().eq('id',deleteId);if(error){toast(error.message);return}state.quotes=state.quotes.filter(q=>q.id!==deleteId);renderHome();renderHistory();toast('Cotización eliminada.');
 };
 $('saveSettings').onclick=async()=>{
- const {data,error}=await sb.from('profiles').update({electricity_rate:n('electricityRate'),labor_hourly:n('laborHourly'),currency:$('currency').value}).eq('id',state.user.id).select().single();
+ const newCurrency=$('currency').value;
+ if(newCurrency!==state.profile.currency&&!confirm('Cambiar la moneda NO convierte tus costos existentes. Tendrás que revisar costo/hora, materiales, electricidad y mano de obra. ¿Continuar?')){$('currency').value=state.profile.currency;return}
+ const {data,error}=await sb.from('profiles').update({electricity_rate:n('electricityRate'),labor_hourly:n('laborHourly'),currency:newCurrency}).eq('id',state.user.id).select().single();
  if(error){toast(error.message);return}
  state.profile=data;$('quoteCurrency').value=state.profile.currency;fillSettings();renderCalc();renderHome();toast('Costos generales guardados.');
 };
