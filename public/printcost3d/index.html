@@ -299,7 +299,7 @@ function fillSettings(){
  $('printerEditor').innerHTML=po;$('quotePrinter').innerHTML=po;$('materialEditor').innerHTML=mo;$('quoteMaterial').innerHTML=mo;
  if(state.printer){$('printerEditor').value=state.printer.id;$('quotePrinter').value=state.printer.id;$('printerName').value=state.printer.name;$('machineHourly').value=Number(state.printer.hourly_cost||0);$('watts').value=Number(state.printer.watts||0)}
  if(state.material){$('materialEditor').value=state.material.id;$('quoteMaterial').value=state.material.id;$('materialName').value=state.material.name;$('kgPrice').value=Number(state.material.kg_price||0)}
- $('electricityRate').value=Number(state.profile?.electricity_rate||11.5);$('laborHourly').value=Number(state.profile?.labor_hourly||250);$('currency').value=state.profile?.currency||'UYU';$('quoteCurrency').value=state.profile?.currency||'UYU';renderResourceDetails();
+ $('electricityRate').value=Number(state.profile?.electricity_rate||11.5);$('laborHourly').value=Number(state.profile?.labor_hourly||250);$('currency').value=state.profile?.currency||'UYU';$('quoteCurrency').value=state.profile?.currency||'UYU';if(state.printer)localStorage.setItem('pc3d_printer_id',state.printer.id);if(state.material)localStorage.setItem('pc3d_material_id',state.material.id);renderResourceDetails();
 }
 function selectPrinter(id){const p=state.printers.find(x=>x.id===id);if(!p)return;state.printer=p;$('printerEditor').value=p.id;$('quotePrinter').value=p.id;$('printerName').value=p.name;$('machineHourly').value=Number(p.hourly_cost||0);$('watts').value=Number(p.watts||0);renderResourceDetails();renderCalc()}
 function selectMaterial(id){const m=state.materials.find(x=>x.id===id);if(!m)return;state.material=m;$('materialEditor').value=m.id;$('quoteMaterial').value=m.id;$('materialName').value=m.name;$('kgPrice').value=Number(m.kg_price||0);renderResourceDetails();renderCalc()}
@@ -322,7 +322,10 @@ async function loadData(){
  ]);
  const loadError=p.error||pr.error||m.error||q.error||u.error;
  if(loadError){state.user=null;toast('No se pudieron cargar todos tus datos. Recargá la página para reintentar.');return}
- state.profile=p.data;state.printers=pr.data||[];state.materials=m.data||[];state.printer=state.printers[0]||null;state.material=state.materials[0]||null;state.quotes=q.data||[];state.monthUsage=Number(u.data?.created_count||0);
+ state.profile=p.data;state.printers=pr.data||[];state.materials=m.data||[];state.quotes=q.data||[];state.monthUsage=Number(u.data?.created_count||0);
+ const lastQuote=state.quotes[0]||null,savedPrinter=localStorage.getItem('pc3d_printer_id'),savedMaterial=localStorage.getItem('pc3d_material_id');
+ state.printer=state.printers.find(x=>x.id===savedPrinter)||state.printers.find(x=>x.id===lastQuote?.printer_id)||state.printers[0]||null;
+ state.material=state.materials.find(x=>x.id===savedMaterial)||state.materials.find(x=>x.id===lastQuote?.material_id)||state.materials[0]||null;
  if(!await ensureDefaults()){state.user=null;return}fillSettings();renderHome();renderHistory();renderCalc();
  $('landingWrap').classList.add('hidden');$('authWrap').classList.add('hidden');$('app').classList.remove('hidden');
 }
