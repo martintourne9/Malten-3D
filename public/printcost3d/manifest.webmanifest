@@ -1,0 +1,11 @@
+{
+  "name": "PrintCost 3D",
+  "short_name": "PrintCost 3D",
+  "description": "Calculá costos reales, precios rentables y guardá cotizaciones de impresión 3D.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f7f5",
+  "theme_color": "#0f6b4f",
+  "lang": "es-UY"
+}
