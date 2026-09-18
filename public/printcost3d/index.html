@@ -195,7 +195,17 @@ button{border:0;border-radius:12px;padding:11px 15px;font-weight:750}button:disa
 <div id="toast" class="toast"></div>
 
 <script type="module">
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.116.0';
+let createClient;
+try{
+ ({createClient}=await import('https://esm.sh/@supabase/supabase-js@2.116.0'));
+}catch(primaryError){
+ try{
+  ({createClient}=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/+esm'));
+ }catch(fallbackError){
+  document.body.innerHTML='<main style="max-width:620px;margin:80px auto;padding:24px;font-family:system-ui"><h1>PrintCost 3D no pudo cargar</h1><p>Tu conexión está activa, pero no pudimos cargar una dependencia necesaria. Recargá la página en unos segundos.</p><button onclick="location.reload()" style="padding:12px 16px">Reintentar</button></main>';
+  throw fallbackError;
+ }
+}
 const SUPABASE_URL='https://fophrvfeftitkgvbuzxu.supabase.co';
 const SUPABASE_KEY='sb_publishable_6wJJwbCXiqHUpigCMt8KNw_30Pf6vRt';
 const sb=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
