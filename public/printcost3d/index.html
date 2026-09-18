@@ -201,7 +201,7 @@ const SUPABASE_KEY='sb_publishable_6wJJwbCXiqHUpigCMt8KNw_30Pf6vRt';
 const sb=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const $=id=>document.getElementById(id);
 let authMode='login',recoveryMode=false;
-let state={user:null,profile:null,printers:[],materials:[],printer:null,material:null,quotes:[],clientQuote:null};
+let state={user:null,profile:null,printers:[],materials:[],printer:null,material:null,quotes:[],clientQuote:null,monthUsage:0};
 
 const esc=(s='')=>String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const n=id=>Number($(id)?.value)||0;
@@ -241,11 +241,13 @@ function show(name){
 }
 function row(q,withActions=false){
  const actions=withActions?'<div class="rowActions"><button class="ghost mini" data-client="'+q.id+'">Cliente</button><button class="ghost mini" data-duplicate="'+q.id+'">Duplicar</button><button class="danger mini" data-delete="'+q.id+'">Eliminar</button></div>':'<span></span>';
- return '<div class="row"><div><b>'+esc(q.name)+'</b><span>'+esc(q.client_name||'Sin cliente')+' · '+(Number(q.quantity||1)>1?Number(q.quantity)+' un. · ':'')+new Date(q.created_at).toLocaleDateString('es-UY')+'</span></div><div><span>Precio</span><b>'+money(q.suggested_price,q.currency)+'</b></div><div><span>Ganancia</span><b>'+money(q.profit,q.currency)+'</b></div>'+actions+'</div>';
+ const resource=[q.printer_name_snapshot,q.material_name_snapshot].filter(Boolean).map(esc).join(' · ');
+ const meta=[esc(q.client_name||'Sin cliente'),Number(q.quantity||1)>1?Number(q.quantity)+' un.':'',resource,new Date(q.created_at).toLocaleDateString('es-UY')].filter(Boolean).join(' · ');
+ return '<div class="row"><div><b>'+esc(q.name)+'</b><span>'+meta+'</span></div><div><span>Precio</span><b>'+money(q.suggested_price,q.currency)+'</b></div><div><span>Ganancia</span><b>'+money(q.profit,q.currency)+'</b></div>'+actions+'</div>';
 }
 function renderHome(){
  const pro=state.profile?.plan!=='free',month=monthQuotes();
- $('statQuotesMonth').textContent=month.length;$('statRevenueMonth').textContent=sumText(month,'suggested_price');$('statProfitMonth').textContent=sumText(month,'profit');$('statUsage').textContent=pro?String(month.length):month.length+'/5';$('statPlan').textContent=pro?'Plan '+state.profile.plan:'Plan Free';$('planTop').textContent=(state.profile?.plan||'free').toUpperCase();
+ $('statQuotesMonth').textContent=month.length;$('statRevenueMonth').textContent=sumText(month,'suggested_price');$('statProfitMonth').textContent=sumText(month,'profit');$('statUsage').textContent=pro?String(state.monthUsage):state.monthUsage+'/5';$('statPlan').textContent=pro?'Plan '+state.profile.plan:'Plan Free';$('planTop').textContent=(state.profile?.plan||'free').toUpperCase();
  $('recentRows').innerHTML=state.quotes.slice(0,4).map(q=>row(q)).join('')||'<div class="empty">Todavía no guardaste cotizaciones.</div>';
  const onboardingDone=localStorage.getItem('pc3d_onboarding_done')==='1';$('onboarding').classList.toggle('hidden',onboardingDone||state.quotes.length>0);
 }
@@ -261,7 +263,8 @@ function renderHistory(){const list=filteredHistory();$('historyRows').innerHTML
 function clientQuoteText(q){return 'Presupuesto · '+q.name+(q.client?'\nCliente: '+q.client:'')+(q.quantity>1?'\nCantidad: '+q.quantity+'\nPrecio unitario: '+money(q.unitPrice,q.currency):'')+'\nPrecio total: '+money(q.price,q.currency)+'\n\nPresupuesto sujeto a confirmación de disponibilidad y detalles finales.\nGenerado con PrintCost 3D'}
 function openClientQuote(q){
  state.clientQuote=q;$('clientQuoteName').textContent=q.name;$('clientQuotePrice').textContent=money(q.price,q.currency);
- $('clientQuoteMeta').innerHTML=(q.client?'<div><b>Cliente:</b> '+esc(q.client)+'</div>':'')+(q.quantity>1?'<div><b>Cantidad:</b> '+q.quantity+' · <b>Por unidad:</b> '+money(q.unitPrice,q.currency)+'</div>':'')+'<div><b>Fecha:</b> '+new Date().toLocaleDateString('es-UY')+'</div>';
+ const date=q.createdAt?new Date(q.createdAt):new Date();
+ $('clientQuoteMeta').innerHTML=(q.client?'<div><b>Cliente:</b> '+esc(q.client)+'</div>':'')+(q.quantity>1?'<div><b>Cantidad:</b> '+q.quantity+' · <b>Por unidad:</b> '+money(q.unitPrice,q.currency)+'</div>':'')+(q.printer||q.material?'<div><b>Producción:</b> '+[q.printer,q.material].filter(Boolean).map(esc).join(' · ')+'</div>':'')+'<div><b>Fecha:</b> '+date.toLocaleDateString('es-UY')+'</div>';
  $('clientQuoteDialog').showModal();
 }
 async function shareClientQuote(q){const text=clientQuoteText(q);try{if(navigator.share)await navigator.share({title:'Presupuesto · '+q.name,text});else{await navigator.clipboard.writeText(text);toast('Presupuesto copiado.')}}catch{}}
@@ -295,14 +298,16 @@ async function loadData(){
  const {data:{session}}=await sb.auth.getSession();
  if(!session){if(!recoveryMode)showLanding();return}
  state.user=session.user;
- const [p,pr,m,q]=await Promise.all([
+ const usageMonth=new Date();usageMonth.setUTCDate(1);usageMonth.setUTCHours(0,0,0,0);const usageKey=usageMonth.toISOString().slice(0,10);
+ const [p,pr,m,q,u]=await Promise.all([
    sb.from('profiles').select('*').eq('id',state.user.id).single(),
    sb.from('printers').select('*').eq('user_id',state.user.id).order('created_at'),
    sb.from('materials').select('*').eq('user_id',state.user.id).order('created_at'),
-   sb.from('quotes').select('*').eq('user_id',state.user.id).order('created_at',{ascending:false})
+   sb.from('quotes').select('*').eq('user_id',state.user.id).order('created_at',{ascending:false}),
+   sb.from('quote_usage_monthly').select('created_count').eq('user_id',state.user.id).eq('month_start',usageKey).maybeSingle()
  ]);
  if(p.error){toast('No se pudo cargar tu perfil.');return}
- state.profile=p.data;state.printers=pr.data||[];state.materials=m.data||[];state.printer=state.printers[0]||null;state.material=state.materials[0]||null;state.quotes=q.data||[];
+ state.profile=p.data;state.printers=pr.data||[];state.materials=m.data||[];state.printer=state.printers[0]||null;state.material=state.materials[0]||null;state.quotes=q.data||[];state.monthUsage=Number(u.data?.created_count||0);
  await ensureDefaults();fillSettings();renderHome();renderHistory();renderCalc();
  $('landingWrap').classList.add('hidden');$('authWrap').classList.add('hidden');$('app').classList.remove('hidden');
 }
@@ -360,10 +365,10 @@ $('saveQuote').onclick=async()=>{
  const name=$('jobName').value.trim();if(!name){toast('Poné un nombre a la pieza.');return}
  if(!state.printer||!state.material){toast('Configurá primero impresora y material.');return}
  const c=calculate(),currency=$('quoteCurrency').value;if(c.invalidPricing){toast('Revisá margen y comisión antes de guardar.');return}
- const payload={user_id:state.user.id,name:name.slice(0,120),client_name:$('clientName').value.trim().slice(0,120)||null,printer_id:state.printer.id,material_id:state.material.id,quantity:c.quantity,grams:c.grams,print_hours:c.hours,labor_minutes:c.labor,extras:c.extras,failure_rate:c.fail*100,margin_rate:c.margin*100,commission_rate:c.commission*100,fixed_fee:c.fixedFee,sales_fee:c.salesFee,round_to:n('roundTo'),material_cost:c.materialCost,machine_cost:c.machineCost,electricity_cost:c.electricityCost,labor_cost:c.laborCost,failure_reserve:c.failureReserve,total_cost:c.totalCost,suggested_price:c.suggestedPrice,unit_price:c.unitPrice,profit:c.profit,currency};
+ const payload={user_id:state.user.id,name:name.slice(0,120),client_name:$('clientName').value.trim().slice(0,120)||null,printer_id:state.printer.id,material_id:state.material.id,printer_name_snapshot:state.printer.name,material_name_snapshot:state.material.name,quantity:c.quantity,grams:c.grams,print_hours:c.hours,labor_minutes:c.labor,extras:c.extras,failure_rate:c.fail*100,margin_rate:c.margin*100,commission_rate:c.commission*100,fixed_fee:c.fixedFee,sales_fee:c.salesFee,round_to:n('roundTo'),material_cost:c.materialCost,machine_cost:c.machineCost,electricity_cost:c.electricityCost,labor_cost:c.laborCost,failure_reserve:c.failureReserve,total_cost:c.totalCost,suggested_price:c.suggestedPrice,unit_price:c.unitPrice,profit:c.profit,currency};
  const {data,error}=await sb.from('quotes').insert(payload).select().single();
  if(error){if(error.message.toUpperCase().includes('FREE PLAN QUOTE LIMIT')){toast('Llegaste a las 5 cotizaciones del plan Free.');show('pro')}else toast(error.message);return}
- state.quotes.unshift(data);renderHome();renderHistory();toast('Cotización guardada en la nube.');
+ state.quotes.unshift(data);state.monthUsage+=1;renderHome();renderHistory();toast('Cotización guardada en la nube.');
 };
 function currentClientQuote(){const c=calculate();return {name:$('jobName').value.trim()||'Impresión 3D',client:$('clientName').value.trim(),quantity:c.quantity,unitPrice:c.unitPrice,price:c.suggestedPrice,currency:$('quoteCurrency').value,invalid:c.invalidPricing}}
 $('previewClientQuote').onclick=()=>{const q=currentClientQuote();if(q.invalid){toast('Revisá margen y comisión primero.');return}openClientQuote(q)};
@@ -373,7 +378,7 @@ $('shareClientDialog').onclick=()=>state.clientQuote&&shareClientQuote(state.cli
 $('copyClientDialog').onclick=async()=>{if(!state.clientQuote)return;await navigator.clipboard.writeText(clientQuoteText(state.clientQuote));toast('Texto copiado.')};
 $('historyRows').onclick=async e=>{
  const deleteId=e.target.dataset.delete,dupId=e.target.dataset.duplicate,clientId=e.target.dataset.client;
- if(clientId){const q=state.quotes.find(x=>x.id===clientId);if(q)openClientQuote({name:q.name,client:q.client_name||'',quantity:Number(q.quantity||1),unitPrice:Number(q.unit_price||q.suggested_price),price:Number(q.suggested_price),currency:q.currency});return}
+ if(clientId){const q=state.quotes.find(x=>x.id===clientId);if(q)openClientQuote({name:q.name,client:q.client_name||'',quantity:Number(q.quantity||1),unitPrice:Number(q.unit_price||q.suggested_price),price:Number(q.suggested_price),currency:q.currency,printer:q.printer_name_snapshot||'',material:q.material_name_snapshot||'',createdAt:q.created_at});return}
  if(dupId){const q=state.quotes.find(x=>x.id===dupId);if(!q)return;if(q.printer_id&&state.printers.some(x=>x.id===q.printer_id))selectPrinter(q.printer_id);if(q.material_id&&state.materials.some(x=>x.id===q.material_id))selectMaterial(q.material_id);$('jobName').value='Copia de '+q.name;$('clientName').value=q.client_name||'';$('quantity').value=q.quantity||1;$('grams').value=q.grams;$('hours').value=q.print_hours;$('laborMinutes').value=q.labor_minutes;$('extras').value=q.extras;$('failureRate').value=q.failure_rate;$('marginRate').value=q.margin_rate;$('commissionRate').value=q.commission_rate||0;$('fixedFee').value=q.fixed_fee||0;$('roundTo').value=q.round_to;$('quoteCurrency').value=state.profile.currency;renderCalc();show('quote');toast('Datos copiados. El precio se recalculó con tus costos actuales.');return}
  if(!deleteId)return;if(!confirm('¿Eliminar esta cotización?'))return;const {error}=await sb.from('quotes').delete().eq('id',deleteId);if(error){toast(error.message);return}state.quotes=state.quotes.filter(q=>q.id!==deleteId);renderHome();renderHistory();toast('Cotización eliminada.');
 };
