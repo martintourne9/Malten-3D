@@ -1,0 +1,46 @@
+name: PrintCost standalone checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "public/printcost3d/**"
+      - ".github/workflows/printcost-standalone-check.yml"
+  pull_request:
+    paths:
+      - "public/printcost3d/**"
+      - ".github/workflows/printcost-standalone-check.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate standalone app
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const html = fs.readFileSync('public/printcost3d/index.html', 'utf8');
+
+          const script = html.match(/<script type="module">([\s\S]*?)<\/script>/);
+          if (!script) throw new Error('Module script not found');
+
+          const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+          new AsyncFunction(script[1]);
+
+          const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]);
+          const duplicates = [...new Set(ids.filter((id, i) => ids.indexOf(id) !== i))];
+          if (duplicates.length) throw new Error('Duplicate IDs: ' + duplicates.join(', '));
+
+          const refs = [...script[1].matchAll(/\$\('([^']+)'\)/g)].map(m => m[1]);
+          const missing = [...new Set(refs.filter(id => !ids.includes(id)))];
+          if (missing.length) throw new Error('Missing DOM IDs: ' + missing.join(', '));
+
+          JSON.parse(fs.readFileSync('public/printcost3d/manifest.webmanifest', 'utf8'));
+          JSON.parse(fs.readFileSync('public/printcost3d/vercel.json', 'utf8'));
+
+          console.log('PrintCost standalone checks passed');
+          NODE
