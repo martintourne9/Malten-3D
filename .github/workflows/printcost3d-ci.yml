@@ -1,0 +1,31 @@
+name: PrintCost 3D CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "printcost3d/**"
+      - ".github/workflows/printcost3d-ci.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: printcost3d
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: printcost3d/package.json
+      - name: Install dependencies
+        run: npm install --ignore-scripts
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Production build
+        run: npm run build
