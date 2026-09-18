@@ -212,7 +212,7 @@ function monthCount(){return monthQuotes().length}
 function sumText(list,key){const totals={};for(const q of list){const cur=q.currency||state.profile?.currency||'UYU';totals[cur]=(totals[cur]||0)+Number(q[key]||0)}return Object.entries(totals).map(([cur,total])=>money(total,cur)).join(' + ')||money(0)}
 function roundUp(v,s){s=Number(s)||1;return Math.ceil(v/s)*s}
 function calculate(){
- const quantity=Math.max(1,Math.floor(n('quantity')||1)),grams=n('grams'),hours=n('hours'),labor=n('laborMinutes'),extras=n('extras'),fail=Math.min(1,Math.max(0,n('failureRate')/100)),margin=Math.min(.90,Math.max(.01,n('marginRate')/100)),commission=Math.min(.80,Math.max(0,n('commissionRate')/100)),fixedFee=Math.max(0,n('fixedFee'));
+ const quantity=Math.max(1,Math.floor(n('quantity')||1)),grams=Math.max(0,n('grams')),hours=Math.max(0,n('hours')),labor=Math.max(0,n('laborMinutes')),extras=Math.max(0,n('extras')),fail=Math.min(1,Math.max(0,n('failureRate')/100)),margin=Math.min(.90,Math.max(.01,n('marginRate')/100)),commission=Math.min(.80,Math.max(0,n('commissionRate')/100)),fixedFee=Math.max(0,n('fixedFee'));
  const materialCost=(grams/1000)*Number(state.material?.kg_price||0);
  const machineCost=hours*Number(state.printer?.hourly_cost||0);
  const electricityCost=hours*(Number(state.printer?.watts||0)/1000)*Number(state.profile?.electricity_rate||0);
@@ -290,9 +290,9 @@ function fillSettings(){
 function selectPrinter(id){const p=state.printers.find(x=>x.id===id);if(!p)return;state.printer=p;$('printerEditor').value=p.id;$('quotePrinter').value=p.id;$('printerName').value=p.name;$('machineHourly').value=Number(p.hourly_cost||0);$('watts').value=Number(p.watts||0);renderResourceDetails();renderCalc()}
 function selectMaterial(id){const m=state.materials.find(x=>x.id===id);if(!m)return;state.material=m;$('materialEditor').value=m.id;$('quoteMaterial').value=m.id;$('materialName').value=m.name;$('kgPrice').value=Number(m.kg_price||0);renderResourceDetails();renderCalc()}
 async function ensureDefaults(){
- if(!state.printers.length){const {data,error}=await sb.from('printers').insert({user_id:state.user.id,name:'Bambu Lab A1',hourly_cost:18,watts:100}).select().single();if(!error)state.printers=[data]}
- if(!state.materials.length){const {data,error}=await sb.from('materials').insert({user_id:state.user.id,name:'PLA',kg_price:700}).select().single();if(!error)state.materials=[data]}
- state.printer=state.printer||state.printers[0]||null;state.material=state.material||state.materials[0]||null;
+ if(!state.printers.length){const {data,error}=await sb.from('printers').insert({user_id:state.user.id,name:'Bambu Lab A1',hourly_cost:18,watts:100}).select().single();if(error){toast('No se pudo crear la impresora inicial. Recargá la página.');return false}state.printers=[data]}
+ if(!state.materials.length){const {data,error}=await sb.from('materials').insert({user_id:state.user.id,name:'PLA',kg_price:700}).select().single();if(error){toast('No se pudo crear el material inicial. Recargá la página.');return false}state.materials=[data]}
+ state.printer=state.printer||state.printers[0]||null;state.material=state.material||state.materials[0]||null;return true;
 }
 async function loadData(){
  const {data:{session}}=await sb.auth.getSession();
@@ -306,9 +306,10 @@ async function loadData(){
    sb.from('quotes').select('*').eq('user_id',state.user.id).order('created_at',{ascending:false}),
    sb.from('quote_usage_monthly').select('created_count').eq('user_id',state.user.id).eq('month_start',usageKey).maybeSingle()
  ]);
- if(p.error){toast('No se pudo cargar tu perfil.');return}
+ const loadError=p.error||pr.error||m.error||q.error||u.error;
+ if(loadError){state.user=null;toast('No se pudieron cargar todos tus datos. Recargá la página para reintentar.');return}
  state.profile=p.data;state.printers=pr.data||[];state.materials=m.data||[];state.printer=state.printers[0]||null;state.material=state.materials[0]||null;state.quotes=q.data||[];state.monthUsage=Number(u.data?.created_count||0);
- await ensureDefaults();fillSettings();renderHome();renderHistory();renderCalc();
+ if(!await ensureDefaults()){state.user=null;return}fillSettings();renderHome();renderHistory();renderCalc();
  $('landingWrap').classList.add('hidden');$('authWrap').classList.add('hidden');$('app').classList.remove('hidden');
 }
 function authMessage(text,type='ok'){const el=$('authMessage');el.textContent=text;el.className='alert '+type}
@@ -355,20 +356,25 @@ $('quotePrinter').addEventListener('change',e=>selectPrinter(e.target.value));$(
 $('quoteMaterial').addEventListener('change',e=>selectMaterial(e.target.value));$('materialEditor').addEventListener('change',e=>selectMaterial(e.target.value));
 $('addPrinter').onclick=async()=>{const {data,error}=await sb.from('printers').insert({user_id:state.user.id,name:'Nueva impresora',hourly_cost:0,watts:0}).select().single();if(error){toast(error.message);return}state.printers.push(data);state.printer=data;fillSettings();$('printerName').focus();$('printerName').select();toast('Impresora agregada. Escribí el nombre y tocá Guardar impresora.')};
 $('addMaterial').onclick=async()=>{const {data,error}=await sb.from('materials').insert({user_id:state.user.id,name:'Nuevo material',kg_price:0}).select().single();if(error){toast(error.message);return}state.materials.push(data);state.material=data;fillSettings();toast('Material agregado. Completá su nombre y precio.')};
-$('savePrinter').onclick=async()=>{if(!state.printer)return;const name=$('printerName').value.trim();if(!name){toast('Poné un nombre a la impresora.');return}const btn=$('savePrinter');btn.disabled=true;const {data,error}=await sb.from('printers').update({name:name.slice(0,120),hourly_cost:n('machineHourly'),watts:n('watts')}).eq('id',state.printer.id).select().single();btn.disabled=false;if(error){toast(error.message);return}state.printer=data;state.printers=state.printers.map(x=>x.id===data.id?data:x);fillSettings();renderCalc();toast('Impresora guardada: '+data.name)};
-$('saveMaterial').onclick=async()=>{if(!state.material)return;const name=$('materialName').value.trim();if(!name){toast('Poné un nombre al material.');return}const btn=$('saveMaterial');btn.disabled=true;const {data,error}=await sb.from('materials').update({name:name.slice(0,120),kg_price:n('kgPrice')}).eq('id',state.material.id).select().single();btn.disabled=false;if(error){toast(error.message);return}state.material=data;state.materials=state.materials.map(x=>x.id===data.id?data:x);fillSettings();renderCalc();toast('Material guardado: '+data.name)};
+$('savePrinter').onclick=async()=>{if(!state.printer)return;const name=$('printerName').value.trim(),hourly=n('machineHourly'),watts=n('watts');if(!name){toast('Poné un nombre a la impresora.');return}if(hourly<0||watts<0){toast('Costo/hora y consumo no pueden ser negativos.');return}const btn=$('savePrinter');btn.disabled=true;try{const {data,error}=await sb.from('printers').update({name:name.slice(0,120),hourly_cost:hourly,watts}).eq('id',state.printer.id).select().single();if(error){toast(error.message);return}state.printer=data;state.printers=state.printers.map(x=>x.id===data.id?data:x);fillSettings();renderCalc();toast('Impresora guardada: '+data.name)}finally{btn.disabled=false}};
+$('saveMaterial').onclick=async()=>{if(!state.material)return;const name=$('materialName').value.trim(),kg=n('kgPrice');if(!name){toast('Poné un nombre al material.');return}if(kg<0){toast('El precio por kg no puede ser negativo.');return}const btn=$('saveMaterial');btn.disabled=true;try{const {data,error}=await sb.from('materials').update({name:name.slice(0,120),kg_price:kg}).eq('id',state.material.id).select().single();if(error){toast(error.message);return}state.material=data;state.materials=state.materials.map(x=>x.id===data.id?data:x);fillSettings();renderCalc();toast('Material guardado: '+data.name)}finally{btn.disabled=false}};
 $('deletePrinter').onclick=async()=>{if(state.printers.length<=1){toast('Necesitás conservar al menos una impresora.');return}if(!confirm('¿Eliminar esta impresora? Las cotizaciones guardadas no se borran.'))return;const id=state.printer.id,{error}=await sb.from('printers').delete().eq('id',id);if(error){toast(error.message);return}state.printers=state.printers.filter(x=>x.id!==id);state.printer=state.printers[0];fillSettings();renderCalc();toast('Impresora eliminada.')};
 $('deleteMaterial').onclick=async()=>{if(state.materials.length<=1){toast('Necesitás conservar al menos un material.');return}if(!confirm('¿Eliminar este material? Las cotizaciones guardadas no se borran.'))return;const id=state.material.id,{error}=await sb.from('materials').delete().eq('id',id);if(error){toast(error.message);return}state.materials=state.materials.filter(x=>x.id!==id);state.material=state.materials[0];fillSettings();renderCalc();toast('Material eliminado.')};
 ['quantity','grams','hours','laborMinutes','extras','failureRate','marginRate','commissionRate','fixedFee','roundTo'].forEach(id=>$(id).addEventListener('input',renderCalc));
 $('resetQuote').onclick=()=>{$('jobName').value='';$('clientName').value='';$('quantity').value=1;$('grams').value=50;$('hours').value=4;$('laborMinutes').value=15;$('extras').value=0;$('failureRate').value=8;$('marginRate').value=55;$('commissionRate').value=0;$('fixedFee').value=0;$('roundTo').value=10;renderCalc()};
 $('saveQuote').onclick=async()=>{
+ const btn=$('saveQuote');if(btn.disabled)return;
  const name=$('jobName').value.trim();if(!name){toast('Poné un nombre a la pieza.');return}
  if(!state.printer||!state.material){toast('Configurá primero impresora y material.');return}
  const c=calculate(),currency=$('quoteCurrency').value;if(c.invalidPricing){toast('Revisá margen y comisión antes de guardar.');return}
+ if(c.totalCost<=0||c.suggestedPrice<=0){toast('Revisá tus costos: la cotización no puede quedar en cero.');return}
+ btn.disabled=true;
  const payload={user_id:state.user.id,name:name.slice(0,120),client_name:$('clientName').value.trim().slice(0,120)||null,printer_id:state.printer.id,material_id:state.material.id,printer_name_snapshot:state.printer.name,material_name_snapshot:state.material.name,quantity:c.quantity,grams:c.grams,print_hours:c.hours,labor_minutes:c.labor,extras:c.extras,failure_rate:c.fail*100,margin_rate:c.margin*100,commission_rate:c.commission*100,fixed_fee:c.fixedFee,sales_fee:c.salesFee,round_to:n('roundTo'),material_cost:c.materialCost,machine_cost:c.machineCost,electricity_cost:c.electricityCost,labor_cost:c.laborCost,failure_reserve:c.failureReserve,total_cost:c.totalCost,suggested_price:c.suggestedPrice,unit_price:c.unitPrice,profit:c.profit,currency};
- const {data,error}=await sb.from('quotes').insert(payload).select().single();
- if(error){if(error.message.toUpperCase().includes('FREE PLAN QUOTE LIMIT')){toast('Llegaste a las 5 cotizaciones del plan Free.');show('pro')}else toast(error.message);return}
- state.quotes.unshift(data);state.monthUsage+=1;renderHome();renderHistory();toast('Cotización guardada en la nube.');
+ try{
+  const {data,error}=await sb.from('quotes').insert(payload).select().single();
+  if(error){if(error.message.toUpperCase().includes('FREE PLAN QUOTE LIMIT')){toast('Llegaste a las 5 cotizaciones del plan Free.');show('pro')}else toast(error.message);return}
+  state.quotes.unshift(data);state.monthUsage+=1;renderHome();renderHistory();toast('Cotización guardada en la nube.');
+ }finally{btn.disabled=false;renderCalc()}
 };
 function currentClientQuote(){const c=calculate();return {name:$('jobName').value.trim()||'Impresión 3D',client:$('clientName').value.trim(),quantity:c.quantity,unitPrice:c.unitPrice,price:c.suggestedPrice,currency:$('quoteCurrency').value,invalid:c.invalidPricing}}
 $('previewClientQuote').onclick=()=>{const q=currentClientQuote();if(q.invalid){toast('Revisá margen y comisión primero.');return}openClientQuote(q)};
@@ -383,11 +389,11 @@ $('historyRows').onclick=async e=>{
  if(!deleteId)return;if(!confirm('¿Eliminar esta cotización?'))return;const {error}=await sb.from('quotes').delete().eq('id',deleteId);if(error){toast(error.message);return}state.quotes=state.quotes.filter(q=>q.id!==deleteId);renderHome();renderHistory();toast('Cotización eliminada.');
 };
 $('saveSettings').onclick=async()=>{
- const newCurrency=$('currency').value;
+ const newCurrency=$('currency').value,electricity=n('electricityRate'),labor=n('laborHourly');if(electricity<0||labor<0){toast('Electricidad y mano de obra no pueden ser negativas.');return}
  if(newCurrency!==state.profile.currency&&!confirm('Cambiar la moneda NO convierte tus costos existentes. Tendrás que revisar costo/hora, materiales, electricidad y mano de obra. ¿Continuar?')){$('currency').value=state.profile.currency;return}
- const {data,error}=await sb.from('profiles').update({electricity_rate:n('electricityRate'),labor_hourly:n('laborHourly'),currency:newCurrency}).eq('id',state.user.id).select().single();
+ const btn=$('saveSettings');btn.disabled=true;try{const {data,error}=await sb.from('profiles').update({electricity_rate:electricity,labor_hourly:labor,currency:newCurrency}).eq('id',state.user.id).select().single();
  if(error){toast(error.message);return}
- state.profile=data;$('quoteCurrency').value=state.profile.currency;fillSettings();renderCalc();renderHome();toast('Costos generales guardados.');
+ state.profile=data;$('quoteCurrency').value=state.profile.currency;fillSettings();renderCalc();renderHome();toast('Costos generales guardados.')}finally{btn.disabled=false}
 };
 $('sendFeedback').onclick=async()=>{const message=$('feedbackMessage').value.trim();if(message.length<3){toast('Escribí un poco más de detalle.');return}const btn=$('sendFeedback');btn.disabled=true;const {error}=await sb.from('feedback').insert({user_id:state.user.id,type:$('feedbackType').value,message});btn.disabled=false;if(error){toast(error.message);return}$('feedbackMessage').value='';toast('¡Gracias! Feedback guardado.')};
 $('proBtn').onclick=()=>toast('Pro está preparado; activaremos Mercado Pago después de validar la versión Free.');
