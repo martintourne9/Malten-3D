@@ -216,6 +216,10 @@ let state={user:null,profile:null,printers:[],materials:[],printer:null,material
 const esc=(s='')=>String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const n=id=>Number($(id)?.value)||0;
 function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2800)}
+async function copyText(text){
+ try{if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(text);return true}}catch{}
+ const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch{}ta.remove();return ok;
+}
 function money(v,c=state.profile?.currency||'UYU'){return new Intl.NumberFormat(c==='UYU'?'es-UY':'en-US',{style:'currency',currency:c,maximumFractionDigits:c==='UYU'?0:2}).format(Number(v)||0)}
 function monthQuotes(){const key=new Date().toISOString().slice(0,7);return state.quotes.filter(q=>String(q.created_at||'').slice(0,7)===key)}
 function monthCount(){return monthQuotes().length}
@@ -277,7 +281,7 @@ function openClientQuote(q){
  $('clientQuoteMeta').innerHTML=(q.client?'<div><b>Cliente:</b> '+esc(q.client)+'</div>':'')+(q.quantity>1?'<div><b>Cantidad:</b> '+q.quantity+' · <b>Por unidad:</b> '+money(q.unitPrice,q.currency)+'</div>':'')+'<div><b>Fecha:</b> '+date.toLocaleDateString('es-UY')+'</div>';
  $('clientQuoteDialog').showModal();
 }
-async function shareClientQuote(q){const text=clientQuoteText(q);try{if(navigator.share)await navigator.share({title:'Presupuesto · '+q.name,text});else{await navigator.clipboard.writeText(text);toast('Presupuesto copiado.')}}catch{}}
+async function shareClientQuote(q){const text=clientQuoteText(q);try{if(navigator.share){await navigator.share({title:'Presupuesto · '+q.name,text});return}const ok=await copyText(text);toast(ok?'Presupuesto copiado.':'No se pudo copiar el presupuesto.')}catch(err){if(err?.name!=='AbortError')toast('No se pudo compartir el presupuesto.')}}
 function printerLabel(p){return p.name+' · '+money(Number(p.hourly_cost||0))+'/h · '+Number(p.watts||0)+' W'}
 function materialLabel(m){return m.name+' · '+money(Number(m.kg_price||0))+'/kg'}
 function renderResourceDetails(){
@@ -393,7 +397,7 @@ $('previewClientQuote').onclick=()=>{const q=currentClientQuote();if(q.invalid){
 $('shareQuote').onclick=()=>{const q=currentClientQuote();if(q.invalid){toast('Revisá margen y comisión primero.');return}shareClientQuote(q)};
 $('closeClientQuote').onclick=()=>$('clientQuoteDialog').close();
 $('shareClientDialog').onclick=()=>state.clientQuote&&shareClientQuote(state.clientQuote);
-$('copyClientDialog').onclick=async()=>{if(!state.clientQuote)return;await navigator.clipboard.writeText(clientQuoteText(state.clientQuote));toast('Texto copiado.')};
+$('copyClientDialog').onclick=async()=>{if(!state.clientQuote)return;const ok=await copyText(clientQuoteText(state.clientQuote));toast(ok?'Texto copiado.':'No se pudo copiar el texto.')};
 $('historyRows').onclick=async e=>{
  const deleteId=e.target.dataset.delete,dupId=e.target.dataset.duplicate,clientId=e.target.dataset.client;
  if(clientId){const q=state.quotes.find(x=>x.id===clientId);if(q)openClientQuote({name:q.name,client:q.client_name||'',quantity:Number(q.quantity||1),unitPrice:Number(q.unit_price||q.suggested_price),price:Number(q.suggested_price),currency:q.currency,printer:q.printer_name_snapshot||'',material:q.material_name_snapshot||'',createdAt:q.created_at});return}
