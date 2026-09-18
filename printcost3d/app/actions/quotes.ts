@@ -28,12 +28,15 @@ export async function createQuote(formData: FormData) {
   if (!printer || !material || !profile) redirect("/app/settings?error=Configurá impresora y material primero");
 
   const input = {
+    quantity: Math.max(1, Math.floor(num(formData, "quantity", 1))),
     grams: Math.max(0, num(formData, "grams")),
     hours: Math.max(0, num(formData, "hours")),
     laborMinutes: Math.max(0, num(formData, "laborMinutes")),
     extras: Math.max(0, num(formData, "extras")),
     failureRate: Math.max(0, num(formData, "failureRate", 8)),
-    marginRate: Math.min(95, Math.max(1, num(formData, "marginRate", 55))),
+    marginRate: Math.min(90, Math.max(1, num(formData, "marginRate", 55))),
+    commissionRate: Math.min(80, Math.max(0, num(formData, "commissionRate", 0))),
+    fixedFee: Math.max(0, num(formData, "fixedFee", 0)),
     roundTo: Math.max(1, num(formData, "roundTo", 10)),
     materialKgPrice: Number(material.kg_price),
     machineHourly: Number(printer.hourly_cost),
@@ -43,18 +46,25 @@ export async function createQuote(formData: FormData) {
   };
 
   const result = calculateQuote(input);
+  if (result.invalidPricing) {
+    redirect("/app/quote?error=Revisá margen y comisión antes de guardar");
+  }
   const { error } = await supabase.from("quotes").insert({
     user_id: userId,
     name: String(formData.get("name") || "Sin nombre").trim().slice(0, 120),
     client_name: String(formData.get("clientName") || "").trim().slice(0, 120) || null,
     printer_id: printer.id,
     material_id: material.id,
+    quantity: input.quantity,
     grams: input.grams,
     print_hours: input.hours,
     labor_minutes: input.laborMinutes,
     extras: input.extras,
     failure_rate: input.failureRate,
     margin_rate: input.marginRate,
+    commission_rate: input.commissionRate,
+    fixed_fee: input.fixedFee,
+    sales_fee: result.salesFee,
     round_to: input.roundTo,
     material_cost: result.materialCost,
     machine_cost: result.machineCost,
@@ -63,6 +73,7 @@ export async function createQuote(formData: FormData) {
     failure_reserve: result.failureReserve,
     total_cost: result.totalCost,
     suggested_price: result.suggestedPrice,
+    unit_price: result.unitPrice,
     profit: result.profit,
     currency: profile.currency,
   });
