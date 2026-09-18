@@ -8,6 +8,14 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      (() => {
+        const authCallback = /(^|[?#&])(access_token|refresh_token|code|token_hash|type|error_code)=/i.test(location.search + location.hash);
+        if (authCallback) {
+          location.replace('https://printcost3d.vercel.app/' + location.search + location.hash);
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
