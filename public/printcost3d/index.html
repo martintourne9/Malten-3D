@@ -203,6 +203,12 @@ button{border:0;border-radius:12px;padding:11px 15px;font-weight:750}button:disa
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script type="module">
+const PRINTCOST_HOME='https://printcost3d.vercel.app/';
+const authCallbackInUrl=/(^|[?#&])(access_token|refresh_token|code|token_hash|type|error_code)=/i.test(location.search+location.hash);
+if(location.origin!=='https://printcost3d.vercel.app'&&authCallbackInUrl){
+  location.replace(PRINTCOST_HOME+location.search+location.hash);
+  await new Promise(()=>{});
+}
 let createClient;
 try{
  ({createClient}=await import('https://esm.sh/@supabase/supabase-js@2.116.0'));
