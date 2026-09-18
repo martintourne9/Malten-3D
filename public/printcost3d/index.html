@@ -224,9 +224,9 @@ async function loadData(){
 }
 function authMessage(text,type='ok'){const el=$('authMessage');el.textContent=text;el.className='alert '+type}
 function setAuthMode(mode){
- recoveryMode=false;authMode=mode;const signup=mode==='signup';$('authTabs').classList.remove('hidden');$('emailLabel').classList.remove('hidden');$('forgotBtn').classList.remove('hidden');$('authEmail').required=true;
- $('tabLogin').classList.toggle('active',!signup);$('tabSignup').classList.toggle('active',signup);
- $('authTitle').textContent=signup?'Creá tu cuenta':'Entrá a tu cuenta';$('authText').textContent=signup?'Tenés 5 cotizaciones gratis por mes.':'Guardá cotizaciones y configuraciones sincronizadas.';$('authSubmit').textContent=signup?'Crear cuenta':'Entrar';$('authPassword').minLength=8;$('authPassword').placeholder='Mínimo 8 caracteres';$('authPassword').autocomplete=signup?'new-password':'current-password';$('authMessage').className='hidden';
+ recoveryMode=false;authMode=mode;const signup=mode==='signup';$('authTabs').classList.remove('hidden');$('emailLabel').classList.remove('hidden');$('authEmail').required=true;
+ $('forgotBtn').classList.toggle('hidden',signup);$('tabLogin').classList.toggle('active',!signup);$('tabSignup').classList.toggle('active',signup);
+ $('authTitle').textContent=signup?'Creá tu cuenta':'Entrá a tu cuenta';$('authText').textContent=signup?'Tenés 5 cotizaciones gratis por mes.':'Guardá cotizaciones y configuraciones sincronizadas.';$('authSubmit').textContent=signup?'Crear cuenta':'Entrar';$('authPassword').minLength=signup?8:6;$('authPassword').placeholder=signup?'Mínimo 8 caracteres':'Tu contraseña';$('authPassword').autocomplete=signup?'new-password':'current-password';$('authMessage').className='hidden';
 }
 function setRecoveryMode(){
  recoveryMode=true;$('authTabs').classList.add('hidden');$('emailLabel').classList.add('hidden');$('forgotBtn').classList.add('hidden');$('authEmail').required=false;
