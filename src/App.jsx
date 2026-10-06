@@ -23,6 +23,7 @@ export default function App() {
         <p className="eyebrow"><Icon name="pin" /> Minas, Uruguay · Trabajo por encargo</p>
         <h1>Objetos que sirven.<br /><span>Ideas que toman forma.</span></h1>
         <div className="hero-bottom"><p>Impresión 3D personalizada y desarrollo web para personas, comercios y emprendedores.</p><a className="button primary" href={generalInquiry} target="_blank" rel="noopener noreferrer"><Icon name="message" />Contanos qué necesitás</a></div>
+        <a className="hero-catalog-link" href="/productos">Explorar productos <span aria-hidden="true">↗</span></a>
         <div className="hero-rule"><span>DEL OBJETO A LA WEB</span><span>HECHO A MEDIDA</span></div>
       </section>
       <section id="servicios" className="section-wrap services">

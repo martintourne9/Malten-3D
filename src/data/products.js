@@ -18,6 +18,14 @@ export const categories = [
   {
     "id": "souvenirs",
     "name": "Souvenirs"
+  },
+  {
+    "id": "riego",
+    "name": "Riego"
+  },
+  {
+    "id": "comercios",
+    "name": "Para comercios"
   }
 ]
 
@@ -134,5 +142,33 @@ export const products = [
     "dimensions": null,
     "priceUyu": null,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DdW46r7xgrg/"
+  },
+  {
+    "id": "anillo-riego",
+    "category": "riego",
+    "name": "Anillo de riego",
+    "description": "Anillo abierto con conexión lateral y patas de apoyo. Una pieza para incorporar a un sistema de riego alrededor de la planta.",
+    "image": "/images/catalogo/anillo-riego-1280.webp",
+    "imageSmall": "/images/catalogo/anillo-riego-640.webp",
+    "alt": "Anillo de riego de Malten 3D Lab",
+    "imageWidth": 1086,
+    "imageHeight": 1448,
+    "dimensions": null,
+    "priceUyu": null,
+    "custom": false
+  },
+  {
+    "id": "exhibidores-personalizados",
+    "category": "comercios",
+    "name": "Exhibidores personalizados",
+    "description": "Exhibidores de mostrador para presentar productos de forma ordenada. El diseño y las medidas se adaptan a lo que necesitás mostrar.",
+    "image": "/images/catalogo/exhibidores-personalizados-1280.webp",
+    "imageSmall": "/images/catalogo/exhibidores-personalizados-640.webp",
+    "alt": "Exhibidores personalizados de Malten 3D Lab",
+    "imageWidth": 1357,
+    "imageHeight": 1159,
+    "dimensions": null,
+    "priceUyu": null,
+    "custom": true
   }
 ]
