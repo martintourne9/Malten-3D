@@ -10,13 +10,15 @@ const services = [
   { number: '03', title: 'Tu negocio, también online.', description: 'Páginas para presentar tus servicios, catálogos digitales y herramientas web. Definimos el alcance según lo que necesitás.', examples: 'Páginas web · Catálogos · Herramientas de cálculo', cta: 'Consultar por una web', message: 'Hola, quiero consultar por una página o herramienta web para mi negocio.' },
 ]
 export default function App() {
+  const isCatalog = /^\/productos\/?$/.test(window.location.pathname)
   return <>
     <a className="skip-link" href="#contenido">Saltar al contenido</a>
     <header className="site-header">
-      <a href="#inicio" className="brand" aria-label="Malten 3D Lab, inicio">MALTEN<span>3D LAB</span></a>
-      <nav aria-label="Navegación principal"><a className="nav-home" href="#inicio">Inicio</a><a href="#servicios">Qué hacemos</a><a href="#proyecto">Proyecto web</a><a className="nav-products" href="#productos"><Icon name="box" />Productos</a><a className="nav-contact" href="#contacto">Hablemos</a></nav>
+      <a href="/#inicio" className="brand" aria-label="Malten 3D Lab, inicio">MALTEN<span>3D LAB</span></a>
+      <nav aria-label="Navegación principal"><a className="nav-home" href="/#inicio">Inicio</a><a href="/#servicios">Qué hacemos</a><a href="/#proyecto">Proyecto web</a><a className="nav-products" href="/productos" aria-current={isCatalog ? 'page' : undefined}><Icon name="box" />Productos</a><a className="nav-contact" href="/#contacto">Hablemos</a></nav>
     </header>
-    <main id="contenido">
+    <main id="contenido" className={isCatalog ? 'catalog-page' : undefined}>
+      {isCatalog ? <Catalog /> : <>
       <section id="inicio" className="hero section-wrap">
         <p className="eyebrow"><Icon name="pin" /> Minas, Uruguay · Trabajo por encargo</p>
         <h1>Objetos que sirven.<br /><span>Ideas que toman forma.</span></h1>
@@ -28,7 +30,6 @@ export default function App() {
         <div className="service-grid">{services.map(service => <article className="service" key={service.number}><div className="service-marker"><Icon name={service.number === '01' ? 'box' : service.number === '02' ? 'wrench' : 'code'} /><span className="service-number">{service.number}</span></div><h3>{service.title}</h3><p>{service.description}</p><p className="examples">{service.examples}</p><a className="text-link" href={whatsapp(service.message)} target="_blank" rel="noopener noreferrer">{service.cta}</a></article>)}</div>
         <a className="portfolio-link" href={instagram} target="_blank" rel="noopener noreferrer">Mirá nuestros trabajos de impresión 3D en Instagram</a>
       </section>
-      <Catalog />
       <section id="proyecto" className="project section-wrap">
         <div className="project-intro"><p className="eyebrow">Un proyecto propio</p><h2>PrintCost 3D</h2><p>Una herramienta web para estimar costos de impresión y calcular el precio de una pieza según sus materiales, tiempo y margen.</p><a className="button secondary" href="https://printcost3d.vercel.app/calculadora-costos-impresion-3d" target="_blank" rel="noopener noreferrer">Probar la calculadora</a></div>
         <div className="project-detail"><span className="project-label">DEL DATO AL PRECIO</span><ol><li><span>01</span>Material y peso</li><li><span>02</span>Tiempo y otros costos</li><li><span>03</span>Margen y precio de venta</li></ol><p>Un ejemplo de las herramientas que desarrollamos.</p></div>
@@ -37,7 +38,8 @@ export default function App() {
         <div><p className="eyebrow">Empecemos por tu necesidad</p><h2>¿Qué querés<br /><span>hacer realidad?</span></h2></div>
         <div className="contact-copy"><p>Contanos qué necesitás, para cuándo y, si corresponde, la cantidad. Con eso evaluamos el trabajo y te pasamos un presupuesto.</p><a className="button primary" href={generalInquiry} target="_blank" rel="noopener noreferrer"><Icon name="message" />Consultar por WhatsApp</a><p className="contact-note">Coordinamos plazos y entrega antes de empezar.</p></div>
       </section>
+      </>}
     </main>
-    <footer className="section-wrap footer"><a className="brand" href="#inicio">MALTEN<span>3D LAB</span></a><p>Minas, Uruguay</p><a href={instagram} target="_blank" rel="noopener noreferrer">Instagram</a></footer>
+    <footer className="section-wrap footer"><a className="brand" href="/#inicio">MALTEN<span>3D LAB</span></a><p>Minas, Uruguay</p><a href={instagram} target="_blank" rel="noopener noreferrer">Instagram</a></footer>
   </>
 }

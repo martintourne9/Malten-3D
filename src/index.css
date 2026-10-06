@@ -16,3 +16,5 @@
 /* Keep the two primary links beside the brand on phone screens. */
 @media(max-width:760px){.site-header{flex-wrap:nowrap;gap:12px}.site-header nav{display:flex;flex-shrink:0;gap:14px;white-space:nowrap}.site-header nav .nav-home{display:none}.site-header nav .nav-products{display:inline-flex;gap:5px}.nav-products .icon{display:none}.site-header .brand{font-size:26px}.site-header .brand span{font-size:10px}}
 @media(max-width:360px){.site-header{padding-left:16px;padding-right:16px}.site-header .brand{font-size:23px}.site-header nav{gap:10px;font-size:13px}}
+
+.catalog-page{min-height:calc(100vh - 180px)}.catalog-page .catalog{padding-top:55px}
