@@ -14,7 +14,7 @@ export default function App() {
     <a className="skip-link" href="#contenido">Saltar al contenido</a>
     <header className="site-header">
       <a href="#inicio" className="brand" aria-label="Malten 3D Lab, inicio">MALTEN<span>3D LAB</span></a>
-      <nav aria-label="Navegación principal"><a className="nav-home" href="#inicio">Inicio</a><a className="nav-products" href="#productos"><Icon name="box" />Productos</a><a href="#servicios">Qué hacemos</a><a href="#proyecto">Proyecto web</a><a className="nav-contact" href="#contacto">Hablemos</a></nav>
+      <nav aria-label="Navegación principal"><a className="nav-home" href="#inicio">Inicio</a><a href="#servicios">Qué hacemos</a><a href="#proyecto">Proyecto web</a><a className="nav-products" href="#productos"><Icon name="box" />Productos</a><a className="nav-contact" href="#contacto">Hablemos</a></nav>
     </header>
     <main id="contenido">
       <section id="inicio" className="hero section-wrap">
