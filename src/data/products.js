@@ -4,6 +4,10 @@ export const categories = [
     "name": "Lámparas"
   },
   {
+    "id": "floreros",
+    "name": "Floreros"
+  },
+  {
     "id": "decoracion",
     "name": "Decoración y macetas"
   },
@@ -58,6 +62,71 @@ export const products = [
     "dimensions": null,
     "priceUyu": null,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DNg30EwSFkY/"
+  },
+  {
+    "id": "florero-helice",
+    "category": "floreros",
+    "name": "Florero hélice",
+    "description": "Silueta estilizada con relieves finos que giran desde la base hasta la boca inclinada. Flores y accesorios de la foto no incluidos.",
+    "image": "/images/catalogo/florero-helice-1280.webp",
+    "imageSmall": "/images/catalogo/florero-helice-640.webp",
+    "alt": "Florero hélice de Malten 3D Lab",
+    "imageWidth": 1024,
+    "imageHeight": 1536,
+    "dimensions": null,
+    "priceUyu": null
+  },
+  {
+    "id": "florero-gota",
+    "category": "floreros",
+    "name": "Florero gota",
+    "description": "Cuerpo redondeado, cuello estrecho y líneas curvas en espiral. Un diseño de formas suaves para decorar tus espacios. Flores y accesorios de la foto no incluidos.",
+    "image": "/images/catalogo/florero-gota-1280.webp",
+    "imageSmall": "/images/catalogo/florero-gota-640.webp",
+    "alt": "Florero gota de Malten 3D Lab",
+    "imageWidth": 1086,
+    "imageHeight": 1448,
+    "dimensions": null,
+    "priceUyu": null
+  },
+  {
+    "id": "florero-calado",
+    "category": "floreros",
+    "name": "Florero calado",
+    "description": "Diseño de trama abierta con perforaciones ovaladas y borde superior de contraste. Una pieza decorativa con textura y volumen. Flores y accesorios de la foto no incluidos.",
+    "image": "/images/catalogo/florero-calado-1280.webp",
+    "imageSmall": "/images/catalogo/florero-calado-640.webp",
+    "alt": "Florero calado de Malten 3D Lab",
+    "imageWidth": 1086,
+    "imageHeight": 1448,
+    "dimensions": null,
+    "priceUyu": null
+  },
+  {
+    "id": "florero-pavo-real",
+    "category": "floreros",
+    "name": "Florero pavo real",
+    "description": "Flores y un pavo real en relieve sobre una silueta de boca asimétrica. Un modelo con detalles ornamentales. Flores y accesorios de la foto no incluidos.",
+    "image": "/images/catalogo/florero-pavo-real-1280.webp",
+    "imageSmall": "/images/catalogo/florero-pavo-real-640.webp",
+    "alt": "Florero pavo real de Malten 3D Lab",
+    "imageWidth": 1024,
+    "imageHeight": 1536,
+    "dimensions": null,
+    "priceUyu": null
+  },
+  {
+    "id": "florero-ondas",
+    "category": "floreros",
+    "name": "Florero ondas",
+    "description": "Relieves amplios en espiral y una silueta alargada. Un diseño que acompaña la decoración de mesas y repisas. Flores y accesorios de la foto no incluidos.",
+    "image": "/images/catalogo/florero-ondas-1280.webp",
+    "imageSmall": "/images/catalogo/florero-ondas-640.webp",
+    "alt": "Florero ondas de Malten 3D Lab",
+    "imageWidth": 1024,
+    "imageHeight": 1536,
+    "dimensions": null,
+    "priceUyu": null
   },
   {
     "id": "maceta-acanalada",
