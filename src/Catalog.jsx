@@ -14,7 +14,7 @@ export default function Catalog() {
     <div className="category-content" aria-live="polite">
       <div className="catalog-section-title"><h2>{category.name}</h2><span>{visibleProducts.length} {visibleProducts.length === 1 ? 'modelo' : 'modelos'}</span></div>
       {visibleProducts.length ? <div className="catalog-grid">{visibleProducts.map(product => <article className="catalog-card" key={product.id}>
-        <img src={product.image} srcSet={`${product.imageSmall} 640w, ${product.image} 1280w`} sizes="(max-width: 760px) 100vw, (max-width: 1000px) 50vw, 33vw" alt={product.alt} width={product.imageWidth} height={product.imageHeight} loading="lazy" />
+        <img src={product.image} srcSet={`${product.imageSmall} 640w, ${product.image} 1280w`} sizes="(max-width: 760px) 100vw, (max-width: 1000px) 50vw, 33vw" alt={product.alt} width={product.imageWidth} height={product.imageHeight} loading={product.imageLoading || 'lazy'} />
         <div><p className="product-category">{categories.find(item => item.id === product.category).name}{product.custom && <span className="product-custom">A medida</span>}</p><h3>{product.name}</h3><p>{product.description}</p>{product.dimensions && <p>{product.dimensions}</p>}{product.priceUyu != null && <strong>{new Intl.NumberFormat('es-UY', { style: 'currency', currency: 'UYU', maximumFractionDigits: 0 }).format(product.priceUyu)}</strong>}</div>
       </article>)}</div> : <div className="catalog-empty"><Icon name="box" /><p>Todavía no hay modelos publicados en esta sección.</p></div>}
     </div>
