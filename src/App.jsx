@@ -1,5 +1,6 @@
 import Catalog from './Catalog'
 import Icon from './Icon'
+import { recordWhatsappClick } from './analytics'
 
 const instagram = 'https://www.instagram.com/malten3dlab/'
 const whatsapp = (message) => `https://wa.me/59899999101?text=${encodeURIComponent(message)}`
@@ -17,7 +18,7 @@ export default function App() {
       <a href="/#inicio" className="brand" aria-label="Malten 3D Lab, inicio">MALTEN<span>3D LAB</span></a>
       <nav aria-label="Navegación principal"><a className="nav-home" href="/#inicio">Inicio</a><a href="/#servicios">Qué hacemos</a><a href="/#proyecto">Proyecto web</a><a className="nav-products" href="/productos" aria-current={isCatalog ? 'page' : undefined}><Icon name="box" />Productos</a><a className="nav-contact" href="/#contacto">Hablemos</a></nav>
     </header>
-    <main id="contenido" className={isCatalog ? 'catalog-page' : undefined}>
+    <main onClick={recordWhatsappClick} id="contenido" className={isCatalog ? 'catalog-page' : undefined}>
       {isCatalog ? <Catalog /> : <>
       <section id="inicio" className="hero section-wrap">
         <p className="eyebrow"><Icon name="pin" /> Minas, Uruguay · Trabajo por encargo</p>

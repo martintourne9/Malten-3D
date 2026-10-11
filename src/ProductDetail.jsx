@@ -39,7 +39,7 @@ export default function ProductDetail({ product, onDismiss }) {
         {product.dimensions && <p><strong>Medidas:</strong> {product.dimensions}</p>}
         {product.priceUyu != null && <p className="product-dialog-price">{new Intl.NumberFormat('es-UY', { style: 'currency', currency: 'UYU', maximumFractionDigits: 0 }).format(product.priceUyu)}</p>}
         <p className="product-dialog-help">Consultá las medidas, los colores y el precio de este modelo por WhatsApp.</p>
-        <a className="button product-whatsapp" href={whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="message" />Consultar este producto</a>
+        <a className="button product-whatsapp" data-product-id={product.id} data-product-name={product.name} data-category={product.category} href={whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="message" />Consultar este producto</a>
         <p className="product-dialog-note">El mensaje incluye el nombre del modelo para que podamos ayudarte.</p>
       </div>
     </div>
