@@ -6,7 +6,7 @@ const instagram = 'https://www.instagram.com/malten3dlab/'
 const whatsapp = (message) => `https://wa.me/59899999101?text=${encodeURIComponent(message)}`
 const generalInquiry = whatsapp('Hola, vengo desde la web de Malten 3D Lab. Quiero consultar por un proyecto.')
 const services = [
-  { number: '01', title: 'Tu marca, en un objeto.', description: 'Llaveros personalizados, exhibidores y cartelería para mostrar tu negocio. También lámparas y regalos por encargo.', examples: 'Llaveros · Exhibidores · Cartelería · Lámparas', cta: 'Consultar por un producto', message: 'Hola, quiero consultar por un producto personalizado en 3D. Necesito:' },
+  { number: '01', title: 'Hacé destacar tu comercio.', description: 'Llaveros personalizados, exhibidores y cartelería para mostrar tu negocio. También lámparas y regalos por encargo.', examples: 'Llaveros · Exhibidores · Cartelería · Lámparas', cta: 'Consultar por un producto', message: 'Hola, quiero consultar por un producto personalizado en 3D. Necesito:' },
   { number: '02', title: 'Una pieza para resolverlo.', description: 'Soportes, accesorios y piezas a medida. Mandanos una foto y las medidas para evaluar si podemos fabricarla en 3D.', examples: 'Soportes · Accesorios · Reposición de piezas', cta: 'Consultar por una pieza', message: 'Hola, necesito evaluar una pieza para imprimir en 3D. Tengo fotos y medidas.' },
   { number: '03', title: 'Tu negocio, también online.', description: 'Páginas para presentar tus servicios, catálogos digitales y herramientas web. Definimos el alcance según lo que necesitás.', examples: 'Páginas web · Catálogos · Herramientas de cálculo', cta: 'Consultar por una web', message: 'Hola, quiero consultar por una página o herramienta web para mi negocio.' },
 ]
@@ -22,8 +22,8 @@ export default function App() {
       {isCatalog ? <Catalog /> : <>
       <section id="inicio" className="hero section-wrap">
         <p className="eyebrow"><Icon name="pin" /> Minas, Uruguay · Trabajo por encargo</p>
-        <h1>Objetos que sirven.<br /><span>Ideas que toman forma.</span></h1>
-        <div className="hero-bottom"><p>Impresión 3D personalizada y desarrollo web para personas, comercios y emprendedores.</p><a className="button primary" href={generalInquiry} target="_blank" rel="noopener noreferrer"><Icon name="message" />Contanos qué necesitás</a></div>
+        <h1>Impresión 3D para tu negocio.<br /><span>Ideas que toman forma.</span></h1>
+        <div className="hero-bottom"><p>Exhibidores, llaveros, cartelería y piezas a medida para comercios y particulares. También creamos soluciones web.</p><a className="button primary" href={generalInquiry} target="_blank" rel="noopener noreferrer"><Icon name="message" />Pedir presupuesto por WhatsApp</a></div>
         <a className="hero-catalog-link" href="/productos">Explorar productos <span aria-hidden="true">↗</span></a>
         <div className="hero-rule"><span>DEL OBJETO A LA WEB</span><span>HECHO A MEDIDA</span></div>
       </section>
