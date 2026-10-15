@@ -32,6 +32,26 @@ export default function App() {
         <div className="service-grid">{services.map(service => <article className="service" key={service.number}><div className="service-marker"><Icon name={service.number === '01' ? 'box' : service.number === '02' ? 'wrench' : 'code'} /><span className="service-number">{service.number}</span></div><h3>{service.title}</h3><p>{service.description}</p><p className="examples">{service.examples}</p><a className="text-link" href={whatsapp(service.message)} target="_blank" rel="noopener noreferrer">{service.cta}</a></article>)}</div>
         <a className="portfolio-link" href={instagram} target="_blank" rel="noopener noreferrer">Mirá nuestros trabajos de impresión 3D en Instagram</a>
       </section>
+      <section id="comercios" className="business-showcase section-wrap" aria-labelledby="business-title">
+        <div className="business-showcase-heading">
+          <div>
+            <p className="eyebrow">Soluciones para comercios</p>
+            <h2 id="business-title">Tu producto merece<br />destacarse.</h2>
+            <p>Diseñamos exhibidores y piezas personalizadas para mostradores, vidrieras y marcas que quieren diferenciarse.</p>
+          </div>
+          <a className="button secondary" href={whatsapp('Hola, tengo un comercio y quiero consultar por exhibidores, llaveros o cartelería personalizados.')} target="_blank" rel="noopener noreferrer"><Icon name="message" />Cotizar para mi comercio</a>
+        </div>
+        <div className="business-showcase-grid">
+          <a className="business-feature" href="/productos" aria-label="Ver exhibidores personalizados en el catálogo">
+            <img src="/images/catalogo/exhibidores-personalizados-1280.webp" srcSet="/images/catalogo/exhibidores-personalizados-640.webp 640w, /images/catalogo/exhibidores-personalizados-1280.webp 1280w" sizes="(max-width: 760px) 100vw, 55vw" alt="Exhibidores personalizados para mostrador fabricados por Malten 3D Lab" width="1357" height="1159" loading="lazy" />
+            <div><span>01 / Exhibidores a medida</span><strong>Organizá y mostrá mejor tus productos.</strong><span>Explorar catálogo ↗</span></div>
+          </a>
+          <div className="business-offers">
+            <div><span>02 / Identidad de marca</span><h3>Llaveros y regalos personalizados</h3><p>Pequeños objetos para que tus clientes se lleven tu marca.</p></div>
+            <div><span>03 / Señalética</span><h3>Cartelería y piezas especiales</h3><p>Desde un cartel de mostrador hasta un accesorio diseñado para tu espacio.</p></div>
+          </div>
+        </div>
+      </section>
       <section id="proyecto" className="project section-wrap">
         <div className="project-intro"><p className="eyebrow">Un proyecto propio</p><h2>PrintCost 3D</h2><p>Una herramienta web para estimar costos de impresión y calcular el precio de una pieza según sus materiales, tiempo y margen.</p><a className="button secondary" href="https://printcost3d.vercel.app/calculadora-costos-impresion-3d" target="_blank" rel="noopener noreferrer">Probar la calculadora</a></div>
         <div className="project-detail"><span className="project-label">DEL DATO AL PRECIO</span><ol><li><span>01</span>Material y peso</li><li><span>02</span>Tiempo y otros costos</li><li><span>03</span>Margen y precio de venta</li></ol><p>Un ejemplo de las herramientas que desarrollamos.</p></div>
