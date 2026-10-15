@@ -6,7 +6,7 @@ const instagram = 'https://www.instagram.com/malten3dlab/'
 const whatsapp = (message) => `https://wa.me/59899999101?text=${encodeURIComponent(message)}`
 const generalInquiry = whatsapp('Hola, vengo desde la web de Malten 3D Lab. Quiero consultar por un proyecto.')
 const services = [
-  { number: '01', title: 'Tu marca, en un objeto.', description: 'Llaveros personalizados, exhibidores y cartelería para mostrar tu negocio. También lámparas y regalos por encargo.', examples: 'Llaveros · Exhibidores · Cartelería · Lámparas', cta: 'Consultar por un producto', message: 'Hola, quiero consultar por un producto personalizado en 3D. Necesito:' },
+  { number: '01', title: 'Hacé destacar tu comercio.', description: 'Llaveros personalizados, exhibidores y cartelería para mostrar tu negocio. También lámparas y regalos por encargo.', examples: 'Llaveros · Exhibidores · Cartelería · Lámparas', cta: 'Consultar por un producto', message: 'Hola, quiero consultar por un producto personalizado en 3D. Necesito:' },
   { number: '02', title: 'Una pieza para resolverlo.', description: 'Soportes, accesorios y piezas a medida. Mandanos una foto y las medidas para evaluar si podemos fabricarla en 3D.', examples: 'Soportes · Accesorios · Reposición de piezas', cta: 'Consultar por una pieza', message: 'Hola, necesito evaluar una pieza para imprimir en 3D. Tengo fotos y medidas.' },
   { number: '03', title: 'Tu negocio, también online.', description: 'Páginas para presentar tus servicios, catálogos digitales y herramientas web. Definimos el alcance según lo que necesitás.', examples: 'Páginas web · Catálogos · Herramientas de cálculo', cta: 'Consultar por una web', message: 'Hola, quiero consultar por una página o herramienta web para mi negocio.' },
 ]
@@ -22,8 +22,8 @@ export default function App() {
       {isCatalog ? <Catalog /> : <>
       <section id="inicio" className="hero section-wrap">
         <p className="eyebrow"><Icon name="pin" /> Minas, Uruguay · Trabajo por encargo</p>
-        <h1>Objetos que sirven.<br /><span>Ideas que toman forma.</span></h1>
-        <div className="hero-bottom"><p>Impresión 3D personalizada y desarrollo web para personas, comercios y emprendedores.</p><a className="button primary" href={generalInquiry} target="_blank" rel="noopener noreferrer"><Icon name="message" />Contanos qué necesitás</a></div>
+        <h1>Impresión 3D para tu negocio.<br /><span>Ideas que toman forma.</span></h1>
+        <div className="hero-bottom"><p>Exhibidores, llaveros, cartelería y piezas a medida para comercios y particulares. También creamos soluciones web.</p><a className="button primary" href={generalInquiry} target="_blank" rel="noopener noreferrer"><Icon name="message" />Pedir presupuesto por WhatsApp</a></div>
         <a className="hero-catalog-link" href="/productos">Explorar productos <span aria-hidden="true">↗</span></a>
         <div className="hero-rule"><span>DEL OBJETO A LA WEB</span><span>HECHO A MEDIDA</span></div>
       </section>
@@ -31,6 +31,26 @@ export default function App() {
         <div className="section-heading"><p className="eyebrow">Qué hacemos</p><h2>Tres formas de dar<br />el próximo paso.</h2></div>
         <div className="service-grid">{services.map(service => <article className="service" key={service.number}><div className="service-marker"><Icon name={service.number === '01' ? 'box' : service.number === '02' ? 'wrench' : 'code'} /><span className="service-number">{service.number}</span></div><h3>{service.title}</h3><p>{service.description}</p><p className="examples">{service.examples}</p><a className="text-link" href={whatsapp(service.message)} target="_blank" rel="noopener noreferrer">{service.cta}</a></article>)}</div>
         <a className="portfolio-link" href={instagram} target="_blank" rel="noopener noreferrer">Mirá nuestros trabajos de impresión 3D en Instagram</a>
+      </section>
+      <section id="comercios" className="business-showcase section-wrap" aria-labelledby="business-title">
+        <div className="business-showcase-heading">
+          <div>
+            <p className="eyebrow">Soluciones para comercios</p>
+            <h2 id="business-title">Tu producto merece<br />destacarse.</h2>
+            <p>Diseñamos exhibidores y piezas personalizadas para mostradores, vidrieras y marcas que quieren diferenciarse.</p>
+          </div>
+          <a className="button secondary" href={whatsapp('Hola, tengo un comercio y quiero consultar por exhibidores, llaveros o cartelería personalizados.')} target="_blank" rel="noopener noreferrer"><Icon name="message" />Cotizar para mi comercio</a>
+        </div>
+        <div className="business-showcase-grid">
+          <a className="business-feature" href="/productos" aria-label="Ver exhibidores personalizados en el catálogo">
+            <img src="/images/catalogo/exhibidores-personalizados-1280.webp" srcSet="/images/catalogo/exhibidores-personalizados-640.webp 640w, /images/catalogo/exhibidores-personalizados-1280.webp 1280w" sizes="(max-width: 760px) 100vw, 55vw" alt="Exhibidores personalizados para mostrador fabricados por Malten 3D Lab" width="1357" height="1159" loading="lazy" />
+            <div><span>01 / Exhibidores a medida</span><strong>Organizá y mostrá mejor tus productos.</strong><span>Explorar catálogo ↗</span></div>
+          </a>
+          <div className="business-offers">
+            <div><span>02 / Identidad de marca</span><h3>Llaveros y regalos personalizados</h3><p>Pequeños objetos para que tus clientes se lleven tu marca.</p></div>
+            <div><span>03 / Señalética</span><h3>Cartelería y piezas especiales</h3><p>Desde un cartel de mostrador hasta un accesorio diseñado para tu espacio.</p></div>
+          </div>
+        </div>
       </section>
       <section id="proyecto" className="project section-wrap">
         <div className="project-intro"><p className="eyebrow">Un proyecto propio</p><h2>PrintCost 3D</h2><p>Una herramienta web para estimar costos de impresión y calcular el precio de una pieza según sus materiales, tiempo y margen.</p><a className="button secondary" href="https://printcost3d.vercel.app/calculadora-costos-impresion-3d" target="_blank" rel="noopener noreferrer">Probar la calculadora</a></div>
