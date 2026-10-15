@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://malten-3-d.vercel.app/sitemap.xml
