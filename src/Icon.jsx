@@ -1,5 +1,6 @@
 export default function Icon({ name }) {
   const paths = {
+    cart: <><path d="M3 4h2l2.3 11h11L21 7H6" /><circle cx="9" cy="20" r="1" /><circle cx="18" cy="20" r="1" /></>,
     arrow: <path d="M4 12h15m-6-6 6 6-6 6" />,
     external: <path d="M13 5h6v6m0-6-9 9m8-1v6H5V6h6" />,
     box: <><path d="m12 3 9 5-9 5-9-5 9-5Z" /><path d="M3 8v9l9 5 9-5V8M12 13v9M7.5 5.5l9 5" /></>,

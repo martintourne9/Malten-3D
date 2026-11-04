@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { categories } from './data/products'
 import Icon from './Icon'
+import { productPrice } from './prices'
 
-export default function ProductDetail({ product, onDismiss }) {
+export default function ProductDetail({ product, quantity, onAdd, onDismiss }) {
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
   const category = categories.find(item => item.id === product.category)
@@ -37,9 +38,10 @@ export default function ProductDetail({ product, onDismiss }) {
         {product.custom && <span className="product-custom">A medida</span>}
         <p className="product-dialog-description">{product.description}</p>
         {product.dimensions && <p><strong>Medidas:</strong> {product.dimensions}</p>}
-        {product.priceUyu != null && <p className="product-dialog-price">{new Intl.NumberFormat('es-UY', { style: 'currency', currency: 'UYU', maximumFractionDigits: 0 }).format(product.priceUyu)}</p>}
+        {product.priceUyu != null && <p className="product-dialog-price">{productPrice(product)}</p>}
         <p className="product-dialog-help">Consultá las medidas, los colores y el precio de este modelo por WhatsApp.</p>
         <a className="button primary product-whatsapp" data-product-id={product.id} data-product-name={product.name} data-category={product.category} href={whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="message" />Consultar por WhatsApp</a>
+        <button className="button cart-add" type="button" disabled={quantity >= 99} onClick={onAdd}><Icon name="cart" />Agregar al carrito<span aria-live="polite">{quantity ? ` · ${quantity} en carrito` : ''}</span></button>
         <p className="product-dialog-note">El mensaje incluye el nombre del modelo para que podamos ayudarte.</p>
       </div>
     </div>

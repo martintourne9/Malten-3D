@@ -46,7 +46,7 @@ export const products = [
     "imageWidth": 1264,
     "imageHeight": 1440,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 1300,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DPm4HiHEs5C/"
   },
   {
@@ -60,7 +60,7 @@ export const products = [
     "imageWidth": 1080,
     "imageHeight": 1440,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 1300,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DNg30EwSFkY/"
   },
   {
@@ -74,7 +74,7 @@ export const products = [
     "imageWidth": 1024,
     "imageHeight": 1536,
     "dimensions": null,
-    "priceUyu": null
+    "priceUyu": 690
   },
   {
     "id": "florero-gota",
@@ -87,7 +87,7 @@ export const products = [
     "imageWidth": 1086,
     "imageHeight": 1448,
     "dimensions": null,
-    "priceUyu": null
+    "priceUyu": 590
   },
   {
     "id": "florero-calado",
@@ -100,7 +100,7 @@ export const products = [
     "imageWidth": 1086,
     "imageHeight": 1448,
     "dimensions": null,
-    "priceUyu": null
+    "priceUyu": 690
   },
   {
     "id": "florero-pavo-real",
@@ -113,7 +113,7 @@ export const products = [
     "imageWidth": 1024,
     "imageHeight": 1536,
     "dimensions": null,
-    "priceUyu": null
+    "priceUyu": 890
   },
   {
     "id": "florero-ondas",
@@ -127,7 +127,7 @@ export const products = [
     "imageWidth": 1024,
     "imageHeight": 1536,
     "dimensions": null,
-    "priceUyu": null
+    "priceUyu": 790
   },
   {
     "id": "maceta-acanalada",
@@ -140,7 +140,7 @@ export const products = [
     "imageWidth": 810,
     "imageHeight": 1080,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 450,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DXfv38nDEv1/"
   },
   {
@@ -154,7 +154,7 @@ export const products = [
     "imageWidth": 1152,
     "imageHeight": 1440,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 250,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DLFehnuskOr/"
   },
   {
@@ -168,7 +168,7 @@ export const products = [
     "imageWidth": 941,
     "imageHeight": 1672,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 850,
     "sourceUrl": "https://www.instagram.com/malten3dlab/reel/DayqhpyRvB6/"
   },
   {
@@ -182,7 +182,7 @@ export const products = [
     "imageWidth": 1440,
     "imageHeight": 1440,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 390,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DPeqgvyEjCu/"
   },
   {
@@ -196,7 +196,7 @@ export const products = [
     "imageWidth": 1024,
     "imageHeight": 1024,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 290,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DK-Zp7vy7w3/"
   },
   {
@@ -210,7 +210,7 @@ export const products = [
     "imageWidth": 1296,
     "imageHeight": 1384,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 90,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DdW46r7xgrg/"
   },
   {
@@ -224,7 +224,7 @@ export const products = [
     "imageWidth": 1086,
     "imageHeight": 1448,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 390,
     "custom": false
   },
   {
@@ -238,7 +238,7 @@ export const products = [
     "imageWidth": 1357,
     "imageHeight": 1159,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 900,
     "custom": true
   }
 ]
