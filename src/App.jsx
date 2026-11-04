@@ -23,13 +23,12 @@ export default function App() {
       <section id="inicio" className="hero section-wrap">
         <p className="eyebrow"><Icon name="pin" /> Minas, Uruguay · Trabajo por encargo</p>
         <h1>Impresión 3D para tu negocio.<br /><span>Ideas que toman forma.</span></h1>
-        <div className="hero-bottom"><p>Exhibidores, llaveros, cartelería y piezas a medida para comercios y particulares. También creamos soluciones web.</p><a className="button primary" href={generalInquiry} target="_blank" rel="noopener noreferrer"><Icon name="message" />Pedir presupuesto por WhatsApp</a></div>
-        <a className="hero-catalog-link" href="/productos">Explorar productos <span aria-hidden="true">↗</span></a>
+        <div className="hero-bottom"><p>Exhibidores, llaveros, cartelería y piezas a medida para comercios y particulares. También creamos soluciones web.</p><div className="hero-actions"><a className="button primary" href={generalInquiry} target="_blank" rel="noopener noreferrer"><Icon name="message" />Pedir presupuesto</a><a className="button secondary" href="/productos"><Icon name="box" />Ver catálogo <Icon name="arrow" /></a></div></div>
         <div className="hero-rule"><span>DEL OBJETO A LA WEB</span><span>HECHO A MEDIDA</span></div>
       </section>
       <section id="servicios" className="section-wrap services">
         <div className="section-heading"><p className="eyebrow">Qué hacemos</p><h2>Tres formas de dar<br />el próximo paso.</h2></div>
-        <div className="service-grid">{services.map(service => <article className="service" key={service.number}><div className="service-marker"><Icon name={service.number === '01' ? 'box' : service.number === '02' ? 'wrench' : 'code'} /><span className="service-number">{service.number}</span></div><h3>{service.title}</h3><p>{service.description}</p><p className="examples">{service.examples}</p><a className="text-link" href={whatsapp(service.message)} target="_blank" rel="noopener noreferrer">{service.cta}</a></article>)}</div>
+        <div className="service-grid">{services.map(service => <article className="service" key={service.number}><div className="service-marker"><Icon name={service.number === '01' ? 'box' : service.number === '02' ? 'wrench' : 'code'} /><span className="service-number">{service.number}</span></div><h3>{service.title}</h3><p>{service.description}</p><p className="examples">{service.examples}</p><a className="button secondary service-action" href={whatsapp(service.message)} target="_blank" rel="noopener noreferrer"><Icon name="message" />{service.cta}</a></article>)}</div>
         <a className="portfolio-link" href={instagram} target="_blank" rel="noopener noreferrer">Mirá nuestros trabajos de impresión 3D en Instagram</a>
       </section>
       <section id="comercios" className="business-showcase section-wrap" aria-labelledby="business-title">
@@ -42,9 +41,9 @@ export default function App() {
           <a className="button secondary" href={whatsapp('Hola, tengo un comercio y quiero consultar por exhibidores, llaveros o cartelería personalizados.')} target="_blank" rel="noopener noreferrer"><Icon name="message" />Cotizar para mi comercio</a>
         </div>
         <div className="business-showcase-grid">
-          <a className="business-feature" href="/productos" aria-label="Ver exhibidores personalizados en el catálogo">
+          <a className="business-feature" href="/productos?categoria=comercios" aria-label="Ver productos para comercios">
             <img src="/images/catalogo/exhibidores-personalizados-1280.webp" srcSet="/images/catalogo/exhibidores-personalizados-640.webp 640w, /images/catalogo/exhibidores-personalizados-1280.webp 1280w" sizes="(max-width: 760px) 100vw, 55vw" alt="Exhibidores personalizados para mostrador fabricados por Malten 3D Lab" width="1357" height="1159" loading="lazy" />
-            <div><span>01 / Exhibidores a medida</span><strong>Organizá y mostrá mejor tus productos.</strong><span>Explorar catálogo ↗</span></div>
+            <div><span>01 / Exhibidores a medida</span><strong>Organizá y mostrá mejor tus productos.</strong><span>Ver productos para comercios →</span></div>
           </a>
           <div className="business-offers">
             <div><span>02 / Identidad de marca</span><h3>Llaveros y regalos personalizados</h3><p>Pequeños objetos para que tus clientes se lleven tu marca.</p></div>
@@ -53,7 +52,7 @@ export default function App() {
         </div>
       </section>
       <section id="proyecto" className="project section-wrap">
-        <div className="project-intro"><p className="eyebrow">Un proyecto propio</p><h2>PrintCost 3D</h2><p>Una herramienta web para estimar costos de impresión y calcular el precio de una pieza según sus materiales, tiempo y margen.</p><a className="button secondary" href="https://printcost3d.vercel.app/calculadora-costos-impresion-3d" target="_blank" rel="noopener noreferrer">Probar la calculadora</a></div>
+        <div className="project-intro"><p className="eyebrow">Un proyecto propio</p><h2>PrintCost 3D</h2><p>Una herramienta web para estimar costos de impresión y calcular el precio de una pieza según sus materiales, tiempo y margen.</p><a className="button secondary" href="https://printcost3d.vercel.app/calculadora-costos-impresion-3d" target="_blank" rel="noopener noreferrer"><Icon name="external" />Probar la calculadora</a></div>
         <div className="project-detail"><span className="project-label">DEL DATO AL PRECIO</span><ol><li><span>01</span>Material y peso</li><li><span>02</span>Tiempo y otros costos</li><li><span>03</span>Margen y precio de venta</li></ol><p>Un ejemplo de las herramientas que desarrollamos.</p></div>
       </section>
       <section id="contacto" className="section-wrap contact">
