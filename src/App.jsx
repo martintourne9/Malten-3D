@@ -10,8 +10,8 @@ const services = [
   { number: '02', title: 'Una pieza para resolverlo.', description: 'Soportes, accesorios y piezas a medida. Mandanos una foto y las medidas para evaluar si podemos fabricarla en 3D.', examples: 'Soportes · Accesorios · Reposición de piezas', cta: 'Consultar por una pieza', message: 'Hola, necesito evaluar una pieza para imprimir en 3D. Tengo fotos y medidas.' },
   { number: '03', title: 'Tu negocio, también online.', description: 'Páginas para presentar tus servicios, catálogos digitales y herramientas web. Definimos el alcance según lo que necesitás.', examples: 'Páginas web · Catálogos · Herramientas de cálculo', cta: 'Consultar por una web', message: 'Hola, quiero consultar por una página o herramienta web para mi negocio.' },
 ]
-export default function App() {
-  const isCatalog = /^\/productos\/?$/.test(window.location.pathname)
+export default function App({ pathname = typeof window === 'undefined' ? '/' : window.location.pathname }) {
+  const isCatalog = /^\/productos\/?$/.test(pathname)
   return <>
     <a className="skip-link" href="#contenido">Saltar al contenido</a>
     <header className="site-header">

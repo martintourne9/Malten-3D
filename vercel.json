@@ -6,11 +6,11 @@
     },
     {
       "source": "/productos",
-      "destination": "/index.html"
+      "destination": "/productos.html"
     },
     {
       "source": "/productos/",
-      "destination": "/index.html"
+      "destination": "/productos.html"
     }
   ],
   "headers": [
