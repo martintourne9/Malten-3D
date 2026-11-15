@@ -53,7 +53,7 @@ export default function App() {
         </div>
       </section>
       <section id="proyecto" className="project section-wrap">
-        <div className="project-intro"><p className="eyebrow">Un proyecto propio</p><h2>PrintCost 3D</h2><p>Una herramienta web para estimar costos de impresión y calcular el precio de una pieza según sus materiales, tiempo y margen.</p><a className="button secondary" href="https://printcost3d.vercel.app/calculadora-costos-impresion-3d" target="_blank" rel="noopener noreferrer">Probar la calculadora</a></div>
+        <div className="project-intro"><p className="eyebrow">Un proyecto propio</p><h2>PrintCost 3D</h2><p>Calculá gratis los costos y el precio de venta de tus impresiones 3D. Ingresá filamento, tiempo de máquina, electricidad y trabajo, y ajustá el margen sin registrarte.</p><a className="button secondary" href="https://printcost3d.vercel.app/calculadora-costos-impresion-3d" target="_blank" rel="noopener noreferrer">Calculadora de costos de impresión 3D</a></div>
         <div className="project-detail"><span className="project-label">DEL DATO AL PRECIO</span><ol><li><span>01</span>Material y peso</li><li><span>02</span>Tiempo y otros costos</li><li><span>03</span>Margen y precio de venta</li></ol><p>Un ejemplo de las herramientas que desarrollamos.</p></div>
       </section>
       <section id="contacto" className="section-wrap contact">
@@ -62,6 +62,6 @@ export default function App() {
       </section>
       </>}
     </main>
-    <footer className="section-wrap footer"><a className="brand" href="/#inicio">MALTEN<span>3D LAB</span></a><p>Minas, Uruguay</p><a href={instagram} target="_blank" rel="noopener noreferrer">Instagram</a></footer>
+    <footer className="section-wrap footer"><a className="brand" href="/#inicio">MALTEN<span>3D LAB</span></a><p>Minas, Uruguay</p><a href="https://printcost3d.vercel.app/calculadora-costos-impresion-3d" target="_blank" rel="noopener noreferrer">PrintCost 3D · Calculadora gratuita</a><a href={instagram} target="_blank" rel="noopener noreferrer">Instagram</a></footer>
   </>
 }
