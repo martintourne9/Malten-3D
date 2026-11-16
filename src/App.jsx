@@ -32,7 +32,7 @@ export default function App({ pathname = typeof window === 'undefined' ? '/' : w
     <a className="skip-link" href="#contenido">Saltar al contenido</a>
     <header className="site-header">
       <a href="/#inicio" className="brand" aria-label="Malten 3D Lab, inicio">MALTEN<span>3D LAB</span></a>
-      <nav aria-label="Navegación principal"><a className="nav-home" href="/#inicio">Inicio</a><a href="/#servicios">Qué hacemos</a><a href="/#como-pedir">Cómo pedir</a><a className="nav-products" href="/productos" aria-current={isCatalog ? 'page' : undefined}><Icon name="box" />Productos</a><a className="nav-contact" href="/#contacto">Hablemos</a></nav>
+      <nav aria-label="Navegación principal"><a className="nav-home" href="/#inicio">Inicio</a><a href="/#servicios">Qué hacemos</a><a href="/#como-pedir">Cómo pedir</a><a className="nav-web" href="/#proyecto" aria-label="Creación de páginas web"><span className="nav-web-desktop">Páginas web</span><span className="nav-web-mobile">Web</span></a><a className="nav-products" href="/productos" aria-current={isCatalog ? 'page' : undefined}><Icon name="box" />Productos</a><a className="nav-contact" href="/#contacto">Hablemos</a></nav>
     </header>
     <main onClick={recordWhatsappClick} id="contenido" className={isCatalog ? 'catalog-page' : undefined}>
       {isCatalog ? <Catalog /> : <>
@@ -43,6 +43,7 @@ export default function App({ pathname = typeof window === 'undefined' ? '/' : w
               <h1>Impresión 3D<br />para <span>tus ideas.</span></h1>
               <p className="hero-description">Un regalo, algo para tu casa, una pieza que necesitás resolver o una idea para tu negocio. En Malten le damos forma con impresión 3D.</p>
               <div className="hero-actions"><a className="button primary" href={generalInquiry} target="_blank" rel="noopener noreferrer"><Icon name="message" />Contanos tu idea</a><a className="hero-catalog-link" href="/productos">Explorar productos <span aria-hidden="true"><Icon name="arrow" /></span></a></div>
+              <a className="hero-web-link" href="/#proyecto"><Icon name="code" />También creamos páginas web. Mirá nuestros trabajos<Icon name="arrow" /></a>
               <p className="hero-delivery">Desde Minas, Lavalleja · Envíos a todo Uruguay</p>
             </div>
             <div className="hero-mosaic" aria-label="Una muestra de los productos de Malten">
@@ -57,6 +58,23 @@ export default function App({ pathname = typeof window === 'undefined' ? '/' : w
           <div className="section-heading"><p className="eyebrow">Qué podemos crear</p><h2>Muchas posibilidades.<br />Tu necesidad primero.</h2></div>
           <div className="service-grid">{services.map(service => <article className="service" key={service.number}><div className="service-marker"><Icon name={service.number === '03' ? 'wrench' : 'box'} /><span className="service-number">{service.number}</span></div><h3>{service.title}</h3><p>{service.description}</p><p className="examples">{service.examples}</p><a className="text-link" href={whatsapp(service.message)} target="_blank" rel="noopener noreferrer">{service.cta}<span aria-hidden="true"><Icon name="arrow" /></span></a></article>)}</div>
           <p className="custom-note">¿No encontrás lo que buscás? El catálogo es una muestra. Mandanos tu referencia y evaluamos si podemos hacerlo.</p>
+        </section>
+        <section id="proyecto" className="section-wrap web-section" aria-labelledby="web-title">
+          <div className="web-service-heading">
+            <div><p className="eyebrow"><Icon name="code" />Creación de páginas web</p><h2 id="web-title">Tu negocio también<br /><span>tiene lugar online.</span></h2><p>Diseñamos páginas para presentar tus servicios, catálogos digitales y herramientas que resuelven una necesidad. Definimos el contenido y las funciones según tu proyecto.</p></div>
+            <div className="web-service-action"><p>¿Necesitás una web para tu emprendimiento?</p><a className="button primary" href={whatsapp('Hola, quiero consultar por la creación de una página web para mi negocio. Me dedico a:')} target="_blank" rel="noopener noreferrer"><Icon name="message" />Consultar por mi página web</a><span>Contanos a qué te dedicás y qué necesitás mostrar.</span></div>
+          </div>
+          <div className="web-work-heading"><h3>Proyectos que ya hicimos.</h3><p>Dos ejemplos reales para explorar lo que desarrollamos.</p></div>
+          <div className="web-projects">
+            <article className="web-project-card">
+              <a className="web-project-preview" href="https://fyf-servicios-integrales-maldonado.mrt1991.chatgpt.site/" target="_blank" rel="noopener noreferrer" aria-label="Ver la web de FYF Servicios Integrales"><img src="/images/web/fyf-preview.jpg" alt="Captura de la página web de FYF Servicios Integrales en Maldonado" width="1348" height="926" loading="lazy" /></a>
+              <div className="web-project-info"><p className="eyebrow">Web de servicios · Maldonado</p><h3>FYF Servicios Integrales</h3><p>Presentación de servicios de aire acondicionado y mantenimiento, galería de trabajos y accesos de contacto por WhatsApp y teléfono.</p><a className="text-link" href="https://fyf-servicios-integrales-maldonado.mrt1991.chatgpt.site/" target="_blank" rel="noopener noreferrer">Visitar la web de FYF<Icon name="arrow" /></a></div>
+            </article>
+            <article className="web-project-card">
+              <a className="web-project-preview" href="https://printcost3d.vercel.app/calculadora-costos-impresion-3d" target="_blank" rel="noopener noreferrer" aria-label="Probar la calculadora de PrintCost 3D"><img src="/images/web/printcost-preview.jpg" alt="Captura de la calculadora gratuita de costos de impresión 3D de PrintCost" width="1363" height="936" loading="lazy" /></a>
+              <div className="web-project-info"><p className="eyebrow">Aplicación web · Proyecto propio</p><h3>PrintCost 3D</h3><p>Nuestra herramienta para calcular costos, precio de venta y margen de una impresión 3D. La calculadora gratuita se puede usar sin registrarse.</p><a className="text-link" href="https://printcost3d.vercel.app/calculadora-costos-impresion-3d" target="_blank" rel="noopener noreferrer">Calculadora de costos de impresión 3D<Icon name="arrow" /></a></div>
+            </article>
+          </div>
         </section>
         <section id="comercios" className="section-wrap home-showcase" aria-labelledby="showcase-title">
           <div className="showcase-heading"><div><p className="eyebrow">Del diseño al objeto</p><h2 id="showcase-title">Distintas ideas.<br />El mismo cuidado.</h2></div><a className="hero-catalog-link" href="/productos">Ver el catálogo completo <span aria-hidden="true"><Icon name="arrow" /></span></a></div>
@@ -75,10 +93,6 @@ export default function App({ pathname = typeof window === 'undefined' ? '/' : w
         <section id="instagram" className="section-wrap instagram-section" aria-labelledby="instagram-title">
           <div className="showcase-heading"><div><p className="eyebrow">Más de Malten</p><h2 id="instagram-title">Lo que compartimos<br />en Instagram.</h2></div><a className="hero-catalog-link" href={instagram} target="_blank" rel="noopener noreferrer">Ver @malten3dlab <span aria-hidden="true"><Icon name="arrow" /></span></a></div>
           <div className="instagram-examples">{instagramExamples.map(item => <a href={item.url} target="_blank" rel="noopener noreferrer" key={item.url}><h3>{item.title}<span aria-hidden="true"><Icon name="arrow" /></span></h3><p>{item.detail}</p><span className="instagram-link-label">Ver publicación en Instagram</span></a>)}</div>
-        </section>
-        <section id="proyecto" className="project section-wrap">
-          <div className="project-intro"><p className="eyebrow">También creamos herramientas web</p><h2>PrintCost 3D</h2><p>Nuestra calculadora gratuita para conocer los costos y el precio de venta de una impresión 3D. Ingresá material, tiempo y otros costos, y ajustá el margen sin registrarte.</p><a className="button secondary" href="https://printcost3d.vercel.app/calculadora-costos-impresion-3d" target="_blank" rel="noopener noreferrer">Calculadora de costos de impresión 3D</a></div>
-          <div className="project-detail"><span className="project-label">TU NEGOCIO, TAMBIÉN ONLINE</span><p className="web-service-copy">Además de los objetos, desarrollamos páginas, catálogos digitales y herramientas web. Definimos cada proyecto según lo que necesitás.</p><a className="text-link" href={whatsapp('Hola, quiero consultar por una página o herramienta web para mi negocio.')} target="_blank" rel="noopener noreferrer">Consultar por una solución web<span aria-hidden="true"><Icon name="arrow" /></span></a></div>
         </section>
         <section id="contacto" className="section-wrap contact">
           <div><p className="eyebrow">Hablemos de tu próximo proyecto</p><h2>Tu idea puede<br /><span>empezar acá.</span></h2></div>

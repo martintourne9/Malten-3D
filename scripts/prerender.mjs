@@ -11,8 +11,8 @@ const origin = 'https://malten-3-d.vercel.app'
 const pages = [
   {
     path: '/', file: 'index.html',
-    title: 'Malten 3D Lab | Impresión 3D personalizada en Minas',
-    description: 'Impresión 3D personalizada en Minas, Uruguay. Regalos, decoración, placas, artículos para comercios y piezas funcionales. Envíos a todo el país.',
+    title: 'Malten 3D Lab | Impresión 3D y páginas web en Minas',
+    description: 'Impresión 3D personalizada y creación de páginas web en Minas, Uruguay. Regalos, decoración, piezas funcionales y soluciones digitales para tu negocio.',
   },
   {
     path: '/productos', file: 'productos.html',
