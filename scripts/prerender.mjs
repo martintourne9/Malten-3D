@@ -11,8 +11,8 @@ const origin = 'https://malten-3-d.vercel.app'
 const pages = [
   {
     path: '/', file: 'index.html',
-    title: 'Malten 3D Lab | Exhibidores, llaveros e impresión 3D en Minas',
-    description: 'Impresión 3D en Minas, Uruguay: exhibidores para comercios, llaveros, cartelería y piezas personalizadas. Pedí presupuesto por WhatsApp.',
+    title: 'Malten 3D Lab | Impresión 3D personalizada en Minas',
+    description: 'Impresión 3D personalizada en Minas, Uruguay. Regalos, decoración, placas, artículos para comercios y piezas funcionales. Envíos a todo el país.',
   },
   {
     path: '/productos', file: 'productos.html',
