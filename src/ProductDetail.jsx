@@ -28,7 +28,7 @@ export default function ProductDetail({ product, onDismiss }) {
   }
 
   return <dialog ref={dialogRef} className="product-dialog" aria-labelledby="product-detail-title" onClick={dismissBackdrop} onCancel={event => { event.preventDefault(); onDismiss() }}>
-    <button ref={closeRef} type="button" className="product-dialog-close" aria-label="Cerrar ficha del producto" onClick={onDismiss}>×</button>
+    <button ref={closeRef} type="button" className="product-dialog-close" aria-label="Cerrar ficha del producto" onClick={onDismiss}><Icon name="close" /></button>
     <div className="product-dialog-layout">
       <div className="product-dialog-photo"><img src={product.image} alt={product.alt} width={product.imageWidth} height={product.imageHeight} /></div>
       <div className="product-dialog-info">
@@ -39,7 +39,7 @@ export default function ProductDetail({ product, onDismiss }) {
         {product.dimensions && <p><strong>Medidas:</strong> {product.dimensions}</p>}
         {product.priceUyu != null && <p className="product-dialog-price">{new Intl.NumberFormat('es-UY', { style: 'currency', currency: 'UYU', maximumFractionDigits: 0 }).format(product.priceUyu)}</p>}
         <p className="product-dialog-help">Consultá las medidas, los colores y el precio de este modelo por WhatsApp.</p>
-        <a className="button product-whatsapp" data-product-id={product.id} data-product-name={product.name} data-category={product.category} href={whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="message" />Consultar este producto</a>
+        <a className="button product-whatsapp" data-product-id={product.id} data-product-name={product.name} data-category={product.category} href={whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" /><span className="button-label">Consultar este producto</span><Icon name="arrow-right" className="button-arrow" /></a>
         <p className="product-dialog-note">El mensaje incluye el nombre del modelo para que podamos ayudarte.</p>
       </div>
     </div>
