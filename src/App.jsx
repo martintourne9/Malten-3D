@@ -32,7 +32,7 @@ export default function App({ pathname = typeof window === 'undefined' ? '/' : w
     <a className="skip-link" href="#contenido">Saltar al contenido</a>
     <header className="site-header">
       <a href="/#inicio" className="brand" aria-label="Malten 3D Lab, inicio">MALTEN<span>3D LAB</span></a>
-      <nav aria-label="Navegación principal"><a className="nav-home" href="/#inicio">Inicio</a><a href="/#servicios">Qué hacemos</a><a href="/#como-pedir">Cómo pedir</a><a className="nav-web" href="/#proyecto" aria-label="Creación de páginas web"><span className="nav-web-desktop">Páginas web</span><span className="nav-web-mobile">Web</span></a><a className="nav-products" href="/productos" aria-current={isCatalog ? 'page' : undefined}><Icon name="box" />Productos</a><a className="nav-contact" href="/#contacto">Hablemos</a></nav>
+      <nav aria-label="Navegación principal"><a className="nav-home" href="/#inicio">Inicio</a><a href="/#servicios">Qué hacemos</a><a href="/#como-pedir">Cómo pedir</a><a className="nav-web" href="/#proyecto" aria-label="Creación de páginas web"><span className="nav-web-desktop">Páginas web</span><span className="nav-web-mobile">Páginas web</span></a><a className="nav-products" href="/productos" aria-current={isCatalog ? 'page' : undefined}><Icon name="box" />Productos</a><a className="nav-contact" href="/#contacto">Hablemos</a></nav>
     </header>
     <main onClick={recordWhatsappClick} id="contenido" className={isCatalog ? 'catalog-page' : undefined}>
       {isCatalog ? <Catalog /> : <>
