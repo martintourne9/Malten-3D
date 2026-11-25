@@ -144,6 +144,17 @@ export const products = [
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DXfv38nDEv1/"
   },
   {
+    "id": "maceta-dorada",
+    "category": "decoracion",
+    "name": "Maceta dorada con plato",
+    "description": "Maceta de textura acanalada y acabado dorado, con un plato circular a juego.",
+    "image": "/images/catalogo/maceta-dorada.webp",
+    "imageSmall": "/images/catalogo/maceta-dorada-640.webp",
+    "alt": "Maceta dorada con estrías verticales y plato a juego sobre una superficie clara",
+    "imageWidth": 1086,
+    "imageHeight": 1448
+  },
+  {
     "id": "macetas-suculentas",
     "category": "decoracion",
     "name": "Macetas para suculentas",
