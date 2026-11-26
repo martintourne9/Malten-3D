@@ -48,7 +48,7 @@ export default function App({ pathname = typeof window === 'undefined' ? '/' : w
             </div>
             <div className="hero-mosaic" aria-label="Una muestra de los productos de Malten">
               <a href="/productos" className="mosaic-tall"><ProductImage id="lampara-espiral" eager /><span>Para tus espacios</span></a>
-              <a href="/productos"><ProductImage id="cubos-sorpresa" /><span>Para regalar</span></a>
+              <a href="/productos"><ProductImage id="maceta-dorada" /><span>Para regalar</span></a>
               <a href="/productos"><ProductImage id="soporte-celular" /><span>Para el día a día</span></a>
             </div>
           </div>

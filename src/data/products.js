@@ -46,7 +46,7 @@ export const products = [
     "imageWidth": 1264,
     "imageHeight": 1440,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 1300,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DPm4HiHEs5C/"
   },
   {
@@ -60,7 +60,7 @@ export const products = [
     "imageWidth": 1080,
     "imageHeight": 1440,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 1300,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DNg30EwSFkY/"
   },
   {
@@ -74,7 +74,7 @@ export const products = [
     "imageWidth": 1024,
     "imageHeight": 1536,
     "dimensions": null,
-    "priceUyu": null
+    "priceUyu": 600
   },
   {
     "id": "florero-gota",
@@ -87,7 +87,7 @@ export const products = [
     "imageWidth": 1086,
     "imageHeight": 1448,
     "dimensions": null,
-    "priceUyu": null
+    "priceUyu": 600
   },
   {
     "id": "florero-calado",
@@ -100,7 +100,7 @@ export const products = [
     "imageWidth": 1086,
     "imageHeight": 1448,
     "dimensions": null,
-    "priceUyu": null
+    "priceUyu": 700
   },
   {
     "id": "florero-pavo-real",
@@ -113,7 +113,7 @@ export const products = [
     "imageWidth": 1024,
     "imageHeight": 1536,
     "dimensions": null,
-    "priceUyu": null
+    "priceUyu": 500
   },
   {
     "id": "florero-ondas",
@@ -127,7 +127,7 @@ export const products = [
     "imageWidth": 1024,
     "imageHeight": 1536,
     "dimensions": null,
-    "priceUyu": null
+    "priceUyu": 600
   },
   {
     "id": "maceta-acanalada",
@@ -140,19 +140,20 @@ export const products = [
     "imageWidth": 810,
     "imageHeight": 1080,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 500,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DXfv38nDEv1/"
   },
   {
     "id": "maceta-dorada",
     "category": "decoracion",
-    "name": "Maceta dorada con plato",
+    "name": "Maceta con plato",
     "description": "Maceta de textura acanalada y acabado dorado, con un plato circular a juego.",
     "image": "/images/catalogo/maceta-dorada.webp",
     "imageSmall": "/images/catalogo/maceta-dorada-640.webp",
     "alt": "Maceta dorada con estrías verticales y plato a juego sobre una superficie clara",
     "imageWidth": 1086,
-    "imageHeight": 1448
+    "imageHeight": 1448,
+    "priceUyu": 500
   },
   {
     "id": "macetas-suculentas",
@@ -165,7 +166,7 @@ export const products = [
     "imageWidth": 1152,
     "imageHeight": 1440,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 120,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DLFehnuskOr/"
   },
   {
@@ -179,7 +180,7 @@ export const products = [
     "imageWidth": 941,
     "imageHeight": 1672,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 600,
     "sourceUrl": "https://www.instagram.com/malten3dlab/reel/DayqhpyRvB6/"
   },
   {
@@ -193,7 +194,7 @@ export const products = [
     "imageWidth": 1440,
     "imageHeight": 1440,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 250,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DPeqgvyEjCu/"
   },
   {
@@ -207,22 +208,15 @@ export const products = [
     "imageWidth": 1024,
     "imageHeight": 1024,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 100,
     "sourceUrl": "https://www.instagram.com/malten3dlab/p/DK-Zp7vy7w3/"
   },
   {
-    "id": "cubos-sorpresa",
+    "id": "llaveros",
     "category": "souvenirs",
-    "name": "Cubos sorpresa",
-    "description": "Pequeños cubos con signo de interrogación y terminación multicolor. Un modelo para recuerdos y souvenirs.",
-    "image": "/images/catalogo/cubos-sorpresa-1280.webp",
-    "imageSmall": "/images/catalogo/cubos-sorpresa-640.webp",
-    "alt": "Cubos sorpresa de Malten 3D Lab",
-    "imageWidth": 1296,
-    "imageHeight": 1384,
-    "dimensions": null,
-    "priceUyu": null,
-    "sourceUrl": "https://www.instagram.com/malten3dlab/p/DdW46r7xgrg/"
+    "name": "Llaveros",
+    "description": "Llaveros impresos en 3D. Consultá los diseños disponibles.",
+    "priceUyu": 100
   },
   {
     "id": "anillo-riego",
@@ -235,7 +229,7 @@ export const products = [
     "imageWidth": 1086,
     "imageHeight": 1448,
     "dimensions": null,
-    "priceUyu": null,
+    "priceUyu": 250,
     "custom": false
   },
   {
