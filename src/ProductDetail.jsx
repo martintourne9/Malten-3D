@@ -39,7 +39,7 @@ export default function ProductDetail({ product, onDismiss, onAdd }) {
         {product.dimensions && <p><strong>Medidas:</strong> {product.dimensions}</p>}
         {product.priceUyu != null && <p className="product-dialog-price">{new Intl.NumberFormat('es-UY', { style: 'currency', currency: 'UYU', maximumFractionDigits: 0 }).format(product.priceUyu)}</p>}
         <p className="product-dialog-help">Antes de pedir, consultá los colores disponibles por WhatsApp.</p>
-        {product.priceUyu != null && <button type="button" className="cart-add" onClick={() => onAdd(product)}>Agregar al carrito</button>}
+        {product.priceUyu != null && <button type="button" className="cart-add" onClick={() => onAdd(product)}><Icon name="cart" />Agregar al carrito</button>}
         <a className="button product-whatsapp" data-product-id={product.id} data-product-name={product.name} data-category={product.category} href={whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" /><span className="button-label">Consultar este producto</span><Icon name="arrow-right" className="button-arrow" /></a>
         <p className="product-dialog-note">El mensaje incluye el nombre del modelo para que podamos ayudarte.</p>
       </div>

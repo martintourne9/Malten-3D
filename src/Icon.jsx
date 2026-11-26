@@ -1,5 +1,10 @@
 // One stroke system across navigation, services, catalog and contact actions.
 const paths = {
+  menu: <path d="M3 6h18M3 12h18M3 18h18" />,
+  home: <><path d="m3 10 9-7 9 7M5 9v12h14V9" /><path d="M10 21v-7h4v7" /></>,
+  steps: <><path d="M9 6h12M9 12h12M9 18h12" /><path d="m3 6 1 1 2-3m-3 8 1 1 2-3m-3 8 1 1 2-3" /></>,
+  cart: <><path d="M2 4h3l3 12h11l2-8H6" /><circle cx="9" cy="20" r="1" /><circle cx="18" cy="20" r="1" /></>,
+
   arrow: <><path d="M7 17 17 7M7 7h10v10" /></>,
   'arrow-right': <path d="M4 12h16m-6-6 6 6-6 6" />,
   box: <><path d="m12 3 9 5-9 5-9-5 9-5Z" /><path d="M3 8v9l9 5 9-5V8M12 13v9M7.5 5.5l9 5" /></>,
