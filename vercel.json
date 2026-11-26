@@ -43,5 +43,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/carrito.html",
+      "destination": "/productos?carrito=1",
+      "permanent": false
+    }
   ]
 }
