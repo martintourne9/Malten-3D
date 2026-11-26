@@ -28,7 +28,10 @@ export default function Cart({ items, total, onChange, onClose }) {
     <div className="cart-heading"><h2 id="cart-title">Tu carrito</h2><button type="button" onClick={onClose} aria-label="Cerrar carrito"><Icon name="close" /></button></div>
     {items.length === 0 ? <><p>Tu carrito está vacío.</p><button type="button" className="cart-action" onClick={onClose}>Explorar productos</button></> : <>
       <ul className="cart-lines">{items.map(({ product, quantity }) => <li key={product.id}>
-        <div><strong>{product.name}</strong><small>{pesos(product.priceUyu)} por unidad</small></div>
+        <div className="cart-product">
+          {product.imageSmall && <img src={product.imageSmall} width="48" height="48" alt="" />}
+          <div><strong>{product.name}</strong><small>{pesos(product.priceUyu)} por unidad</small></div>
+        </div>
         <strong>{pesos(product.priceUyu * quantity)}</strong>
         <div className="cart-quantity">
           <button type="button" aria-label={'Restar una unidad de ' + product.name} disabled={quantity === 1} onClick={() => onChange(product.id, quantity - 1)}>−</button>
@@ -37,9 +40,10 @@ export default function Cart({ items, total, onChange, onClose }) {
         </div>
         <button className="cart-remove" type="button" aria-label={'Quitar ' + product.name} onClick={() => onChange(product.id, 0)}>Quitar</button>
       </li>)}</ul>
-      <p className="cart-total"><strong>Total de productos</strong><strong>{pesos(total)} UYU</strong></p>
+      <p className="cart-total" aria-live="polite" aria-atomic="true"><strong>Total de productos</strong><strong>{pesos(total)} UYU</strong></p>
       <p>Confirmá colores, disponibilidad y costo de entrega por WhatsApp.</p>
       <a className="cart-action" href={'https://wa.me/59899999101?text=' + encodeURIComponent(message)} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" />Consultar pedido por WhatsApp</a>
+      <button type="button" className="cart-continue" onClick={onClose}>Seguir eligiendo productos</button>
     </>}
   </dialog>
 }

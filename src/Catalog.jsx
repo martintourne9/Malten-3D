@@ -7,8 +7,14 @@ import { recordEvent } from './analytics'
 
 const categoryIcons = { lamparas: 'lamp', floreros: 'vase', decoracion: 'leaf', escritorio: 'pencil', accesorios: 'wrench', souvenirs: 'gift', riego: 'droplet', comercios: 'store' }
 
+function categoryFromLocation() {
+  if (typeof window === 'undefined') return 'todos'
+  const id = new URLSearchParams(window.location.search).get('categoria')
+  return categories.some(category => category.id === id) ? id : 'todos'
+}
+
 export default function Catalog() {
-  const [selected, setSelected] = useState('todos')
+  const [selected, setSelected] = useState(categoryFromLocation)
   const [activeProduct, setActiveProduct] = useState(null)
   const [cartOpen, setCartOpen] = useState(() => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('carrito') === '1')
   const [quantities, setQuantities] = useState(() => {
@@ -42,9 +48,19 @@ export default function Catalog() {
     setActiveProduct(product)
     recordEvent('product_view', { product_id: product.id, product_name: product.name, category: product.category })
   }
+  useEffect(() => {
+    const restoreCategory = () => setSelected(categoryFromLocation())
+    window.addEventListener('popstate', restoreCategory)
+    return () => window.removeEventListener('popstate', restoreCategory)
+  }, [])
   function selectCategory(id) {
+    if (id === selected) return
+    const url = new URL(window.location.href)
+    if (id === 'todos') url.searchParams.delete('categoria')
+    else url.searchParams.set('categoria', id)
+    window.history.pushState(window.history.state, '', url)
     setSelected(id)
-    if (id !== selected) recordEvent('category_selected', { category: id })
+    recordEvent('category_selected', { category: id })
   }
   return <section id="productos" className="section-wrap catalog">
     <p className="eyebrow">Catálogo Malten</p>

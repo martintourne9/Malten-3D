@@ -23,3 +23,9 @@
   .cart-dialog .cart-action{width:100%;text-align:center}
   .catalog-card .cart-add{width:100%}
 }
+.cart-product { display: flex; align-items: center; gap: .65rem; min-width: 0; }
+.cart-product img { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; flex: none; }
+.cart-product strong { overflow-wrap: anywhere; }
+.cart-dialog .cart-action { width: 100%; }
+.cart-continue { display: block; width: 100%; min-height: 44px; margin-top: .35rem; border: 0; border-radius: 12px; background: transparent; color: #314e38; font: inherit; font-weight: 600; cursor: pointer; }
+.cart-continue:hover { background: #edf1e6; }
