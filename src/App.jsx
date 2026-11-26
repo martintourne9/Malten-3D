@@ -45,9 +45,9 @@ export default function App({ pathname = typeof window === 'undefined' ? '/' : w
               <p className="hero-delivery">Desde Minas, Lavalleja · Envíos a todo Uruguay</p>
             </div>
             <div className="hero-mosaic" aria-label="Una muestra de los productos de Malten">
-              <a href="/productos" className="mosaic-tall"><ProductImage id="lampara-espiral" eager /><span>Para tus espacios</span></a>
-              <a href="/productos"><ProductImage id="maceta-dorada" /><span>Para regalar</span></a>
-              <a href="/productos"><ProductImage id="soporte-celular" /><span>Para el día a día</span></a>
+              <a href="/productos?producto=lampara-espiral" className="mosaic-tall"><ProductImage id="lampara-espiral" eager /><span>Para tus espacios</span></a>
+              <a href="/productos?producto=maceta-dorada"><ProductImage id="maceta-dorada" /><span>Para regalar</span></a>
+              <a href="/productos?producto=soporte-celular"><ProductImage id="soporte-celular" /><span>Para el día a día</span></a>
             </div>
           </div>
           <div className="hero-rule"><span>DECORACIÓN · PERSONALIZADOS · PIEZAS FUNCIONALES</span><span>UNA IDEA ES EL PUNTO DE PARTIDA</span></div>
@@ -81,7 +81,7 @@ export default function App({ pathname = typeof window === 'undefined' ? '/' : w
             ['anillo-riego', 'Resolver', 'Accesorios con una función'],
             ['portalapices-trenzado', 'Organizar', 'Diseño para el día a día'],
             ['exhibidores-personalizados', 'Mostrar', 'Piezas para tu negocio'],
-          ].map(([id, label, text]) => <a href="/productos" className="sample-item" key={id}><ProductImage id={id} /><div><span>{label}</span><h3>{text}</h3><span aria-hidden="true"><Icon name="arrow" /></span></div></a>)}</div>
+          ].map(([id, label, text]) => <a href={`/productos?producto=${id}`} className="sample-item" key={id}><ProductImage id={id} /><div><span>{label}</span><h3>{text}</h3><span aria-hidden="true"><Icon name="arrow" /></span></div></a>)}</div>
         </section>
         <section id="como-pedir" className="section-wrap order-section" aria-labelledby="order-title">
           <div className="section-heading"><p className="eyebrow">Del primer mensaje a tu pedido</p><h2 id="order-title">No necesitás llegar<br />con todo resuelto.</h2></div>

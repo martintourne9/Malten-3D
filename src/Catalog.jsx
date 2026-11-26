@@ -13,10 +13,16 @@ function categoryFromLocation() {
   return categories.some(category => category.id === id) ? id : 'todos'
 }
 
+function productFromLocation() {
+  if (typeof window === 'undefined') return null
+  const id = new URLSearchParams(window.location.search).get('producto')
+  return products.find(product => product.id === id) || null
+}
+
 export default function Catalog() {
   const [selected, setSelected] = useState(categoryFromLocation)
-  const [activeProduct, setActiveProduct] = useState(null)
-  const [cartOpen, setCartOpen] = useState(() => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('carrito') === '1')
+  const [activeProduct, setActiveProduct] = useState(productFromLocation)
+  const [cartOpen, setCartOpen] = useState(() => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('carrito') === '1' && !productFromLocation())
   const [quantities, setQuantities] = useState(() => {
     try {
       const saved = JSON.parse(window.localStorage.getItem('malten-cart-v1'))
@@ -31,7 +37,7 @@ export default function Catalog() {
   const count = items.reduce((sum, item) => sum + item.quantity, 0)
   function addProduct(product) {
     setQuantities(prev => ({ ...prev, [product.id]: (prev[product.id] || 0) + 1 }))
-    setActiveProduct(null)
+    if (activeProduct) closeProduct()
     setCartOpen(true)
   }
   function changeQuantity(id, quantity) {
@@ -45,11 +51,30 @@ export default function Catalog() {
   const category = selected === 'todos' ? { name: 'Todos los productos' } : categories.find(item => item.id === selected)
   const visibleProducts = products.filter(product => selected === 'todos' || product.category === selected)
   function openProduct(product) {
+    const url = new URL(window.location.href)
+    url.searchParams.delete('carrito')
+    url.searchParams.set('producto', product.id)
+    window.history.pushState({ ...window.history.state, productOpenedHere: true }, '', url)
     setActiveProduct(product)
     recordEvent('product_view', { product_id: product.id, product_name: product.name, category: product.category })
   }
+  function closeProduct() {
+    setActiveProduct(null)
+    if (window.history.state?.productOpenedHere) {
+      window.history.back()
+      return
+    }
+    const url = new URL(window.location.href)
+    url.searchParams.delete('producto')
+    window.history.replaceState(window.history.state, '', url)
+  }
   useEffect(() => {
-    const restoreCategory = () => setSelected(categoryFromLocation())
+    const restoreCategory = () => {
+      setSelected(categoryFromLocation())
+      const product = productFromLocation()
+      setActiveProduct(product)
+      if (product) setCartOpen(false)
+    }
     window.addEventListener('popstate', restoreCategory)
     return () => window.removeEventListener('popstate', restoreCategory)
   }, [])
@@ -76,6 +101,6 @@ export default function Catalog() {
     </div>
     <div className="cart-bar"><button type="button" onClick={() => setCartOpen(true)}><Icon name="cart" />Ver carrito ({count}) · {pesos(total)}</button></div>
     {cartOpen && <Cart items={items} total={total} onChange={changeQuantity} onClose={() => setCartOpen(false)} />}
-    {activeProduct && <ProductDetail onAdd={addProduct} product={activeProduct} onDismiss={() => setActiveProduct(null)} />}
+    {activeProduct && <ProductDetail onAdd={addProduct} product={activeProduct} onDismiss={closeProduct} />}
   </section>
 }
