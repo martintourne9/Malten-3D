@@ -6,8 +6,7 @@ export default function ProductDetail({ product, onDismiss, onAdd }) {
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
   const [shareState, setShareState] = useState('')
-  const shareUrl = new URL('/productos', window.location.origin)
-  shareUrl.searchParams.set('producto', product.id)
+  const shareUrl = new URL('/fichas/' + encodeURIComponent(product.id) + '.html', window.location.origin)
 
   async function shareProduct() {
     if (navigator.share) {
@@ -41,6 +40,12 @@ export default function ProductDetail({ product, onDismiss, onAdd }) {
       document.body.style.overflow = previousOverflow
     }
   }, [])
+
+  useEffect(() => {
+    const originalTitle = document.title
+    document.title = product.name + ' · Malten 3D Lab'
+    return () => { document.title = originalTitle }
+  }, [product.name])
 
   function dismissBackdrop(event) {
     if (event.target !== event.currentTarget) return
