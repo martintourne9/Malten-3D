@@ -6,8 +6,9 @@ export default function ProductDetail({ product, onDismiss, onAdd }) {
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
   const [shareState, setShareState] = useState('')
-  const [showAlternate, setShowAlternate] = useState(false)
-  const photo = (showAlternate && product.alternatePhoto) || product
+  const galleryRef = useRef(null)
+  const [photoIndex, setPhotoIndex] = useState(0)
+  const photos = product.alternatePhoto ? [product, product.alternatePhoto] : [product]
   const shareUrl = new URL('/fichas/' + encodeURIComponent(product.id) + '.html', window.location.origin)
 
   async function shareProduct() {
@@ -58,11 +59,19 @@ export default function ProductDetail({ product, onDismiss, onAdd }) {
   return <dialog ref={dialogRef} className="product-dialog" aria-labelledby="product-detail-title" onClick={dismissBackdrop} onCancel={event => { event.preventDefault(); onDismiss() }}>
     <button ref={closeRef} type="button" className="product-dialog-close" aria-label="Cerrar ficha del producto" onClick={onDismiss}><Icon name="close" /></button>
     <div className="product-dialog-layout" style={product.image ? undefined : { display: 'block' }}>
-      {product.image && <div className="product-dialog-photo" style={{ flexDirection: 'column' }}>
-        <img src={photo.image} alt={photo.alt} width={photo.imageWidth} height={photo.imageHeight} />
-        {product.alternatePhoto && <button type="button" className="product-detail-button" onClick={() => setShowAlternate(value => !value)}>
-          {showAlternate ? 'Ver foto principal' : 'Ver lámparas encendidas'}
-        </button>}
+      {product.image && <div className="product-dialog-photo">
+        {photos.length > 1 ? <div className="product-gallery">
+          <div className="product-gallery-track" ref={galleryRef} onScroll={({ currentTarget }) => {
+            setPhotoIndex(Math.round(currentTarget.scrollLeft / currentTarget.clientWidth))
+          }}>
+            {photos.map(photo => <img key={photo.image} src={photo.image} alt={photo.alt} width={photo.imageWidth} height={photo.imageHeight} />)}
+          </div>
+          <div className="product-gallery-dots" role="group" aria-label="Fotos del producto">
+            {photos.map((photo, index) => <button key={photo.image} type="button"
+              aria-label={`Ver foto ${index + 1} de ${photos.length}`} aria-current={index === photoIndex ? 'true' : undefined}
+              onClick={() => galleryRef.current.scrollTo({ left: index * galleryRef.current.clientWidth })} />)}
+          </div>
+        </div> : <img src={product.image} alt={product.alt} width={product.imageWidth} height={product.imageHeight} />}
       </div>}
       <div className="product-dialog-info">
         <p className="eyebrow">{category.name}</p>

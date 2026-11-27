@@ -122,3 +122,33 @@
   .button.primary:hover,.button.product-whatsapp:hover,.button:active,.product-dialog-close:hover{transform:none}
 }
 @media(min-width:761px) and (max-width:1000px){.site-header{gap:20px;padding:20px 24px}.site-header .brand{font-size:23px}.site-header nav{gap:12px;font-size:12px}.site-header nav .nav-contact{padding:10px 12px}}
+
+.product-gallery { width: 100%; min-width: 0; }
+.product-gallery-track {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.product-gallery-track::-webkit-scrollbar { display: none; }
+.product-gallery-track img { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
+.product-gallery-dots { display: flex; justify-content: center; }
+.product-gallery-dots button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 36px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.product-gallery-dots button::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border: 1px solid #566049;
+  border-radius: 50%;
+}
+.product-gallery-dots button[aria-current]::after { background: #566049; }
