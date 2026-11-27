@@ -19,9 +19,9 @@ const steps = [
   { title: 'Coordinamos la entrega.', text: 'Una vez confirmado el trabajo, acordamos la producción y la entrega en Minas o el envío a otro punto de Uruguay.' },
 ]
 const instagramExamples = [
-  { title: 'Placas de puerta', detail: 'Números, nombres e identidad para tu espacio.', url: 'https://www.instagram.com/malten3dlab/reel/DbZb6yCxv2r/' },
-  { title: 'Reparación y réplica de piezas', detail: 'Una posibilidad para resolver una pieza plástica, previa evaluación.', url: 'https://www.instagram.com/malten3dlab/reel/DdKHnpDxgXB/' },
-  { title: 'Ideas para regalar', detail: 'Souvenirs, colores y pequeños detalles con personalidad.', url: 'https://www.instagram.com/malten3dlab/p/DdW46r7xgrg/' },
+  { title: 'Placas de puerta', preview: 'placa', detail: 'Identificá la entrada de tu casa o local con un número, un nombre o ambos.', url: 'https://www.instagram.com/malten3dlab/reel/DbZb6yCxv2r/' },
+  { title: 'Reparación y réplica de piezas', preview: 'pieza', detail: '¿Tenés una pieza plástica dañada? Con fotos y medidas podemos evaluar si es posible reproducirla.', url: 'https://www.instagram.com/malten3dlab/reel/DdKHnpDxgXB/' },
+  { title: 'Ideas para regalar', preview: 'regalo', detail: 'Souvenirs, colores y pequeños detalles con personalidad.', url: 'https://www.instagram.com/malten3dlab/p/DdW46r7xgrg/' },
 ]
 function ProductImage({ id, eager = false, className }) {
   const product = products.find(item => item.id === id)
@@ -90,7 +90,13 @@ export default function App({ pathname = typeof window === 'undefined' ? '/' : w
         </section>
         <section id="instagram" className="section-wrap instagram-section" aria-labelledby="instagram-title">
           <div className="showcase-heading"><div><p className="eyebrow">Más de Malten</p><h2 id="instagram-title">Lo que compartimos<br />en Instagram.</h2></div><a className="hero-catalog-link" href={instagram} target="_blank" rel="noopener noreferrer"><Icon name="instagram" />Ver @malten3dlab <span aria-hidden="true"><Icon name="arrow" /></span></a></div>
-          <div className="instagram-examples">{instagramExamples.map(item => <a href={item.url} target="_blank" rel="noopener noreferrer" key={item.url}><h3>{item.title}<span aria-hidden="true"><Icon name="arrow" /></span></h3><p>{item.detail}</p><span className="instagram-link-label"><Icon name="instagram" />Ver publicación en Instagram</span></a>)}</div>
+          <div className="instagram-examples">{instagramExamples.map(item => <a href={item.url} target="_blank" rel="noopener noreferrer" key={item.url}>
+            <div className={`work-preview work-preview-${item.preview}`} aria-hidden="true">
+              {item.preview === 'placa' && <span className="house-number">128</span>}
+              {item.preview === 'pieza' && <Icon name="wrench" />}
+              {item.preview === 'regalo' && <img src="/images/catalogo/cubos-sorpresa-640.webp" width="599" height="640" loading="lazy" alt="" />}
+            </div>
+            <h3>{item.title}<span aria-hidden="true"><Icon name="arrow" /></span></h3><p>{item.detail}</p><span className="instagram-link-label"><Icon name="instagram" />Ver publicación en Instagram</span></a>)}</div>
         </section>
         <section id="contacto" className="section-wrap contact">
           <div><p className="eyebrow">Hablemos de tu próximo proyecto</p><h2>Tu idea puede<br /><span>empezar acá.</span></h2></div>
