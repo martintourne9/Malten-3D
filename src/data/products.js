@@ -54,6 +54,12 @@ export const products = [
     "category": "lamparas",
     "name": "Lámpara espiral",
     "description": "Pantalla de líneas curvas sobre una base circular. La foto muestra la versión verde encendida.",
+    "alternatePhoto": {
+      "image": "/images/catalogo/lampara-espiral-ambiente.webp",
+      "alt": "Dos lámparas espirales encendidas con luz cálida sobre una mesa de madera",
+      "imageWidth": 914,
+      "imageHeight": 1000
+    },
     "image": "/images/catalogo/lampara-espiral-1280.webp",
     "imageSmall": "/images/catalogo/lampara-espiral-640.webp",
     "alt": "Lámpara espiral de Malten 3D Lab",

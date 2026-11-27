@@ -6,6 +6,8 @@ export default function ProductDetail({ product, onDismiss, onAdd }) {
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
   const [shareState, setShareState] = useState('')
+  const [showAlternate, setShowAlternate] = useState(false)
+  const photo = (showAlternate && product.alternatePhoto) || product
   const shareUrl = new URL('/fichas/' + encodeURIComponent(product.id) + '.html', window.location.origin)
 
   async function shareProduct() {
@@ -56,7 +58,12 @@ export default function ProductDetail({ product, onDismiss, onAdd }) {
   return <dialog ref={dialogRef} className="product-dialog" aria-labelledby="product-detail-title" onClick={dismissBackdrop} onCancel={event => { event.preventDefault(); onDismiss() }}>
     <button ref={closeRef} type="button" className="product-dialog-close" aria-label="Cerrar ficha del producto" onClick={onDismiss}><Icon name="close" /></button>
     <div className="product-dialog-layout" style={product.image ? undefined : { display: 'block' }}>
-      {product.image && <div className="product-dialog-photo"><img src={product.image} alt={product.alt} width={product.imageWidth} height={product.imageHeight} /></div>}
+      {product.image && <div className="product-dialog-photo" style={{ flexDirection: 'column' }}>
+        <img src={photo.image} alt={photo.alt} width={photo.imageWidth} height={photo.imageHeight} />
+        {product.alternatePhoto && <button type="button" className="product-detail-button" onClick={() => setShowAlternate(value => !value)}>
+          {showAlternate ? 'Ver foto principal' : 'Ver lámparas encendidas'}
+        </button>}
+      </div>}
       <div className="product-dialog-info">
         <p className="eyebrow">{category.name}</p>
         <h2 id="product-detail-title">{product.name}</h2>
