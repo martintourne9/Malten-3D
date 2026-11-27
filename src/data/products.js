@@ -215,6 +215,11 @@ export const products = [
     "id": "llaveros",
     "category": "souvenirs",
     "name": "Llaveros",
+    "image": "/images/catalogo/cubos-sorpresa-1280.webp",
+    "imageSmall": "/images/catalogo/cubos-sorpresa-640.webp",
+    "alt": "Bolsa de Malten 3D Lab con cubos de colores y signos de interrogación en relieve",
+    "imageWidth": 1199,
+    "imageHeight": 1280,
     "description": "Llaveros impresos en 3D. Consultá los diseños disponibles.",
     "priceUyu": 100
   },
