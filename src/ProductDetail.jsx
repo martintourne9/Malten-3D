@@ -1,10 +1,31 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { categories } from './data/products'
 import Icon from './Icon'
 
 export default function ProductDetail({ product, onDismiss, onAdd }) {
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
+  const [shareState, setShareState] = useState('')
+  const shareUrl = new URL('/productos', window.location.origin)
+  shareUrl.searchParams.set('producto', product.id)
+
+  async function shareProduct() {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: product.name + ' · Malten 3D Lab', url: shareUrl.href })
+        return
+      } catch (error) {
+        if (error.name === 'AbortError') return
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(shareUrl.href)
+      setShareState('copied')
+    } catch {
+      setShareState('manual')
+    }
+  }
+
   const category = categories.find(item => item.id === product.category)
   const message = `Hola, Malten. Me interesa el producto ${product.name}. ¿Qué colores están disponibles?`
   const whatsapp = `https://wa.me/59899999101?text=${encodeURIComponent(message)}`
@@ -41,7 +62,11 @@ export default function ProductDetail({ product, onDismiss, onAdd }) {
         <p className="product-dialog-help">Antes de pedir, consultá los colores disponibles por WhatsApp.</p>
         {product.priceUyu != null && <button type="button" className="cart-add" onClick={() => onAdd(product)}><Icon name="cart" />Agregar al carrito</button>}
         <a className="button product-whatsapp" data-product-id={product.id} data-product-name={product.name} data-category={product.category} href={whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" /><span className="button-label">Consultar este producto</span><Icon name="arrow-right" className="button-arrow" /></a>
-        <p className="product-dialog-note">El mensaje incluye el nombre del modelo para que podamos ayudarte.</p>
+        <button className="product-detail-button" type="button" onClick={shareProduct}>Compartir producto</button>
+        <span role="status">{shareState === 'copied' ? 'Enlace copiado.' : ''}</span>
+        {shareState === 'manual' && <label>Copiá el enlace del producto
+          <input type="url" value={shareUrl.href} readOnly onFocus={event => event.target.select()} style={{ width: '100%' }} />
+        </label>}
       </div>
     </div>
   </dialog>
