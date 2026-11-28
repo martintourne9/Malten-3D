@@ -5,7 +5,7 @@ import Cart, { pesos } from './Cart'
 import ProductDetail from './ProductDetail'
 import { recordEvent } from './analytics'
 
-const categoryIcons = { lamparas: 'lamp', floreros: 'vase', decoracion: 'leaf', escritorio: 'pencil', accesorios: 'wrench', souvenirs: 'gift', riego: 'droplet', comercios: 'store' }
+const categoryIcons = { navidad: 'gift', lamparas: 'lamp', floreros: 'vase', decoracion: 'leaf', escritorio: 'pencil', accesorios: 'wrench', souvenirs: 'gift', riego: 'droplet', comercios: 'store' }
 
 function categoryFromLocation() {
   if (typeof window === 'undefined') return 'todos'

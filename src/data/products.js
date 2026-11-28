@@ -1,5 +1,9 @@
 export const categories = [
   {
+    "id": "navidad",
+    "name": "Navidad"
+  },
+  {
     "id": "lamparas",
     "name": "Lámparas"
   },
@@ -35,6 +39,30 @@ export const categories = [
 
 // Add dimensions and prices only after confirmation. Source URLs retain photo provenance.
 export const products = [
+  {
+    "id": "gnomo-navideno",
+    "category": "navidad",
+    "name": "Gnomo navideño",
+    "description": "Figura decorativa impresa en 3D con gorro rojo, barba blanca y textura de tejido.",
+    "image": "/images/catalogo/gnomo-navideno-1280.webp",
+    "imageSmall": "/images/catalogo/gnomo-navideno-640.webp",
+    "alt": "Gnomo navideño con gorro rojo y barba blanca sobre una mesa de madera",
+    "imageWidth": 1086,
+    "imageHeight": 1448,
+    "priceUyu": 600
+  },
+  {
+    "id": "osito-navideno",
+    "category": "navidad",
+    "name": "Osito navideño",
+    "description": "Figura decorativa impresa en 3D con textura de tejido y gorro navideño rojo.",
+    "image": "/images/catalogo/osito-navideno-1280.webp",
+    "imageSmall": "/images/catalogo/osito-navideno-640.webp",
+    "alt": "Osito blanco con gorro navideño rojo sobre una mesa de madera",
+    "imageWidth": 1086,
+    "imageHeight": 1448,
+    "priceUyu": 400
+  },
   {
     "id": "lampara-facetada",
     "category": "lamparas",
